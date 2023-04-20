@@ -26,7 +26,7 @@ use UserNotLoggedIn;
 use WikiMap;
 use Wikimedia\Rdbms\ILBFactory;
 
-class SpecialRequestRequestInterwiki extends FormSpecialPage {
+class SpecialRequestInterwiki extends FormSpecialPage {
 
 	/** @var ILBFactory */
 	private $dbLoadBalancerFactory;
