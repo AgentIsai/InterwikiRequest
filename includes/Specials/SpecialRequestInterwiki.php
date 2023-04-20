@@ -52,7 +52,7 @@ class SpecialRequestInterwiki extends FormSpecialPage {
 		RepoGroup $repoGroup,
 		UserFactory $userFactory
 	) {
-		parent::__construct( 'RequestInterwiki', 'request-import-dump' );
+		parent::__construct( 'RequestInterwiki', 'request-interwiki' );
 
 		$this->dbLoadBalancerFactory = $dbLoadBalancerFactory;
 		$this->mimeAnalyzer = $mimeAnalyzer;
@@ -154,7 +154,7 @@ class SpecialRequestInterwiki extends FormSpecialPage {
 		}
 
 		if (
-			$this->getUser()->pingLimiter( 'request-import-dump' ) ||
+			$this->getUser()->pingLimiter( 'request-interwiki' ) ||
 			UploadBase::isThrottled( $this->getUser() )
 		) {
 			return Status::newFatal( 'actionthrottledtext' );
@@ -391,7 +391,7 @@ class SpecialRequestInterwiki extends FormSpecialPage {
 		if (
 			$block && (
 				$user->isBlockedFromUpload() ||
-				$block->appliesToRight( 'request-import-dump' )
+				$block->appliesToRight( 'request-interwiki' )
 			)
 		) {
 			throw new UserBlockedError( $block );

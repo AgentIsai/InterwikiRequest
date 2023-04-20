@@ -7,7 +7,7 @@
 	},
 	"action-handle-import-dump-interwiki": "处理导入转储跨维基",
 	"action-handle-import-dump-requests": "处理用户导入转储请求",
-	"action-request-import-dump": "请求导入转储",
+	"action-request-interwiki": "请求导入转储",
 	"action-view-private-import-dump-requests": "查看私有导入转储请求",
 	"echo-category-title-requestinterwiki-new-request": "新的导入转储请求",
 	"echo-category-title-requestinterwiki-request-comment": "添加到导入转储请求的注释",

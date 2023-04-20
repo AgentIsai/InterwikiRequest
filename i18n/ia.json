@@ -6,7 +6,7 @@
 	},
 	"action-handle-import-dump-interwiki": "gerer importationes de datos inter wikis",
 	"action-handle-import-dump-requests": "gerer requestas de usatores concernente le importation de datos",
-	"action-request-import-dump": "requestar importationes de datos",
+	"action-request-interwiki": "requestar importationes de datos",
 	"action-view-private-import-dump-requests": "vider requestas private de importation de datos",
 	"echo-category-title-requestinterwiki-new-request": "Nove requesta de importation de datos",
 	"echo-category-title-requestinterwiki-request-comment": "Commento addite a un requesta de importation de datos",
@@ -103,7 +103,7 @@
 	"requestinterwiki-usergroups-none": "necun",
 	"requestinterwikiprivate-log-header": "Isto es un registro de tote le requestas de importation de datos e cambiamentos de statos pro le requestas con destinationes que es wikis private.",
 	"requestinterwikiprivate-log-name": "Registro private de requestas de importation de datos",
-	"ipb-action-request-import-dump": "Requestar importationes de datos",
+	"ipb-action-request-interwiki": "Requestar importationes de datos",
 	"log-action-filter-requestinterwiki": "Typo de action:",
 	"log-action-filter-requestinterwiki-interwiki": "Modificationes del tabella interwiki",
 	"log-action-filter-requestinterwiki-request": "Nove requestas submittite",
@@ -122,6 +122,6 @@
 	"RequestInterwikiQueue": "Cauda de requestas de importation de datos",
 	"right-handle-import-dump-interwiki": "Gerer importationes de datos inter wikis",
 	"right-handle-import-dump-requests": "Gerer requestas de usatores concernente le importation de datos",
-	"right-request-import-dump": "Requestar importationes de datos",
+	"right-request-interwiki": "Requestar importationes de datos",
 	"right-view-private-import-dump-requests": "Vider requestas private de importation de datos"
 }

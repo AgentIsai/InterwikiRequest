@@ -6,7 +6,7 @@
 	},
 	"action-handle-import-dump-interwiki": "handle import dump interwiki",
 	"action-handle-import-dump-requests": "handle user import dump requests",
-	"action-request-import-dump": "request import dumps",
+	"action-request-interwiki": "request import dumps",
 	"action-view-private-import-dump-requests": "view private import dump requests",
 	"echo-category-title-requestinterwiki-new-request": "New import dump request",
 	"echo-category-title-requestinterwiki-request-comment": "Comment added to an import dump request",
@@ -103,7 +103,7 @@
 	"requestinterwiki-usergroups-none": "none",
 	"requestinterwikiprivate-log-header": "This is a log of all import dump requests and status updates for requests with targets that are private wikis.",
 	"requestinterwikiprivate-log-name": "Import dump requests private log",
-	"ipb-action-request-import-dump": "Requesting import dumps",
+	"ipb-action-request-interwiki": "Requesting import dumps",
 	"log-action-filter-requestinterwiki": "Type of action:",
 	"log-action-filter-requestinterwiki-interwiki": "Interwiki table modifications",
 	"log-action-filter-requestinterwiki-request": "New requests submitted",
@@ -122,6 +122,6 @@
 	"RequestInterwikiQueue": "Import Dump Requests Queue",
 	"right-handle-import-dump-interwiki": "Handle import dump interwiki",
 	"right-handle-import-dump-requests": "Handle user import dump requests",
-	"right-request-import-dump": "Request import dumps",
+	"right-request-interwiki": "Request import dumps",
 	"right-view-private-import-dump-requests": "View private import dump requests"
 }

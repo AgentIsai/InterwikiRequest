@@ -8,7 +8,7 @@
 	},
 	"action-handle-import-dump-interwiki": "處理匯入傾印跨 wiki",
 	"action-handle-import-dump-requests": "處理使用者匯入傾印請求",
-	"action-request-import-dump": "請求匯入傾印",
+	"action-request-interwiki": "請求匯入傾印",
 	"action-view-private-import-dump-requests": "查看私有匯入傾印請求",
 	"echo-category-title-requestinterwiki-new-request": "新的匯入傾印請求",
 	"echo-category-title-requestinterwiki-request-comment": "添加到匯入傾印請求的意見",
@@ -105,7 +105,7 @@
 	"requestinterwiki-usergroups-none": "無",
 	"requestinterwikiprivate-log-header": "這是所有匯入傾印請求和目標為私有 wiki 的請求的狀態更新日誌。",
 	"requestinterwikiprivate-log-name": "匯入傾印請求私有日誌",
-	"ipb-action-request-import-dump": "請求匯入傾印",
+	"ipb-action-request-interwiki": "請求匯入傾印",
 	"log-action-filter-requestinterwiki": "操作類型：",
 	"log-action-filter-requestinterwiki-interwiki": "跨 wiki 表格變動",
 	"log-action-filter-requestinterwiki-request": "已提交新請求",
@@ -124,6 +124,6 @@
 	"RequestInterwikiQueue": "匯入傾印請求佇列",
 	"right-handle-import-dump-interwiki": "處理匯入傾印跨 wiki",
 	"right-handle-import-dump-requests": "處理使用者匯入傾印請求",
-	"right-request-import-dump": "請求匯入傾印",
+	"right-request-interwiki": "請求匯入傾印",
 	"right-view-private-import-dump-requests": "查看私有匯入傾印請求"
 }

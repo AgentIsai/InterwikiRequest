@@ -25,13 +25,13 @@
 	},
 	"GroupPermissions": {
 		"user": {
-			"request-import-dump": true
+			"request-interwiki": true
 		}
 	},
 	"AvailableRights": [
 		"handle-import-dump-interwiki",
 		"handle-import-dump-requests",
-		"request-import-dump",
+		"request-interwiki",
 		"view-private-import-dump-requests"
 	],
 	"LogActionsHandlers": {
@@ -178,7 +178,7 @@
 		"echo-subscriptions-web-requestinterwiki-new-request"
 	],
 	"RateLimits": {
-		"request-import-dump": {
+		"request-interwiki": {
 			"user": [
 				5,
 				60

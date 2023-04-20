@@ -6,7 +6,7 @@
 	},
 	"action-handle-import-dump-interwiki": "upravljanje uvoza izpisov med vikiji",
 	"action-handle-import-dump-requests": "obravnavo prošenj uporabnikov za uvoz izpisa",
-	"action-request-import-dump": "zahtevanje uvoza izpisov",
+	"action-request-interwiki": "zahtevanje uvoza izpisov",
 	"action-view-private-import-dump-requests": "ogledovanje zasebnih prošenj za uvoz izpisa",
 	"echo-category-title-requestinterwiki-new-request": "Nov zahtevek za uvoz izpisa",
 	"echo-category-title-requestinterwiki-request-comment": "K prošnji za uvoz izpisa je bil dodan komentar",
@@ -103,7 +103,7 @@
 	"requestinterwiki-usergroups-none": "nobena",
 	"requestinterwikiprivate-log-header": "To je dnevnik vseh prošenj za uvoz izpisa in posodobitev stanja za prošnje s cilji, ki so zasebni vikiji.",
 	"requestinterwikiprivate-log-name": "Dnevnik prošenj za uvoz izpisa",
-	"ipb-action-request-import-dump": "Zaprositev za uvozov izpisov",
+	"ipb-action-request-interwiki": "Zaprositev za uvozov izpisov",
 	"log-action-filter-requestinterwiki": "Vrsta dejanja:",
 	"log-action-filter-requestinterwiki-interwiki": "Spremembe tabele intervikijev",
 	"log-action-filter-requestinterwiki-request": "Predložitev novih prošenj",
@@ -122,6 +122,6 @@
 	"RequestInterwikiQueue": "Čakalana vrsta prošenj za uvoz izpisa",
 	"right-handle-import-dump-interwiki": "Obravnava uvoza izpisa med vikiji",
 	"right-handle-import-dump-requests": "Obravnava uporabniških prošenj za uvoz izpisa",
-	"right-request-import-dump": "Prošnja za uvoz izpisa",
+	"right-request-interwiki": "Prošnja za uvoz izpisa",
 	"right-view-private-import-dump-requests": "Ogledovanje zasebnih prošenj za uvoz izpisa"
 }

@@ -7,7 +7,7 @@
 	},
 	"action-handle-import-dump-interwiki": "работа со меѓувики за складишни извадоци на увози",
 	"action-handle-import-dump-requests": "работа со кориснички барања за увози",
-	"action-request-import-dump": "барање за складиштен извадок на увози",
+	"action-request-interwiki": "барање за складиштен извадок на увози",
 	"action-view-private-import-dump-requests": "гледање на приватни барања за складишни извадоци на увози",
 	"echo-category-title-requestinterwiki-new-request": "Ново барање за складиштен извадок на увози",
 	"echo-category-title-requestinterwiki-request-comment": "Додаден коментар во барање за складиштен извадок на увоз",
@@ -104,7 +104,7 @@
 	"requestinterwiki-usergroups-none": "нема",
 	"requestinterwikiprivate-log-header": "Ова е дневник на сите барања за складишни извадоци на увози и состојбени измени на барања со цели кои се приватни викија.",
 	"requestinterwikiprivate-log-name": "Приватен дневник на барања за складиштен извадок на увози",
-	"ipb-action-request-import-dump": "Барање за складишни извадоци на увози",
+	"ipb-action-request-interwiki": "Барање за складишни извадоци на увози",
 	"log-action-filter-requestinterwiki": "Вид дејство:",
 	"log-action-filter-requestinterwiki-interwiki": "Измени во меѓувики-табела",
 	"log-action-filter-requestinterwiki-request": "Поднесено ново барање",
@@ -123,6 +123,6 @@
 	"RequestInterwikiQueue": "Редица на барања за складиштен извадок на увози",
 	"right-handle-import-dump-interwiki": "Работа со меѓувики за складишни извадоци на увози",
 	"right-handle-import-dump-requests": "Работа со кориснички барања за складишни извадоци на увози",
-	"right-request-import-dump": "Барање за складиштен извадок на увози",
+	"right-request-interwiki": "Барање за складиштен извадок на увози",
 	"right-view-private-import-dump-requests": "Преглед на приватни барања за складиштен извадок на увози"
 }

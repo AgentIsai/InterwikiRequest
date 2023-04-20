@@ -9,7 +9,7 @@
 	},
 	"action-handle-import-dump-interwiki": "Import-Dump-Interwiki bearbeiten",
 	"action-handle-import-dump-requests": "Benutzer-Import-Dump-Anfragen bearbeiten",
-	"action-request-import-dump": "Import-Dumps anfordern",
+	"action-request-interwiki": "Import-Dumps anfordern",
 	"action-view-private-import-dump-requests": "private Import-Dump-Anfragen anzeigen",
 	"echo-category-title-requestinterwiki-new-request": "Neuer Antrag auf Import-Dump",
 	"echo-category-title-requestinterwiki-request-comment": "Kommentar zu einer Import-Dump-Anfrage hinzugefügt",
@@ -106,7 +106,7 @@
 	"requestinterwiki-usergroups-none": "keine",
 	"requestinterwikiprivate-log-header": "Dies ist ein Logbuch aller Import-Dump-Anfragen und Statusaktualisierungen für Anfragen mit Zielen, die private Wikis sind.",
 	"requestinterwikiprivate-log-name": "Dump-Anforderungen importieren privates Logbuch",
-	"ipb-action-request-import-dump": "Anforderung von Import-Dumps",
+	"ipb-action-request-interwiki": "Anforderung von Import-Dumps",
 	"log-action-filter-requestinterwiki": "Typ der Aktion:",
 	"log-action-filter-requestinterwiki-interwiki": "Änderungen der Interwiki-Tabelle",
 	"log-action-filter-requestinterwiki-request": "Neue Anfragen eingereicht",
@@ -125,6 +125,6 @@
 	"RequestInterwikiQueue": "Warteschlange für Dump-Anfragen importieren",
 	"right-handle-import-dump-interwiki": "Import-Dump interwiki bearbeiten",
 	"right-handle-import-dump-requests": "Bearbeitung von Benutzer-Import-Dump-Anfragen",
-	"right-request-import-dump": "Import-Dumps anfordern",
+	"right-request-interwiki": "Import-Dumps anfordern",
 	"right-view-private-import-dump-requests": "Private Import-Dump-Anfragen anzeigen"
 }

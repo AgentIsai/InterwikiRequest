@@ -5,7 +5,7 @@
 		]
 	},
 	"action-handle-import-dump-requests": "hantera importeringsbegäran från användare",
-	"action-request-import-dump": "begära att importera dumpar",
+	"action-request-interwiki": "begära att importera dumpar",
 	"action-view-private-import-dump-requests": "visa begäran att importera dumpar",
 	"requestinterwiki-label-add-comment": "Lägg till kommentar",
 	"requestinterwiki-label-all": "Alla",

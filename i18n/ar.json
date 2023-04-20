@@ -59,7 +59,7 @@
 	"requestinterwiki-unknown": "طلب غير معروف.",
 	"requestinterwiki-usergroups-none": "لا شيء",
 	"requestinterwikiprivate-log-header": "هذا سجل لجميع طلبات تفريغ الاستيراد وتحديثات الحالة للطلبات ذات الأهداف التي تمثل مواقع ويكى الخاصة.",
-	"ipb-action-request-import-dump": "طلب استيراد تفريغ",
+	"ipb-action-request-interwiki": "طلب استيراد تفريغ",
 	"log-action-filter-requestinterwikiprivate": "نوع الفعل:",
 	"logentry-requestinterwikiprivate-request": "طلب $1 تفريغ استيراد لـويكى الخاص $4 في $5.",
 	"right-handle-import-dump-requests": "التعامل مع طلبات تفريغ استيراد المستخدم"

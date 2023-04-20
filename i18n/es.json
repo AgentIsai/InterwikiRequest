@@ -9,7 +9,7 @@
 	},
 	"action-handle-import-dump-interwiki": "manejar volcado de importación interwiki",
 	"action-handle-import-dump-requests": "manejar solicitudes de volcado de importación de usuarios",
-	"action-request-import-dump": "solicitar volcados de importación",
+	"action-request-interwiki": "solicitar volcados de importación",
 	"action-view-private-import-dump-requests": "ver solicitudes de volcado de importación privadas",
 	"echo-category-title-requestinterwiki-new-request": "Nueva solicitud de volcado de importación",
 	"echo-category-title-requestinterwiki-request-comment": "Comentario añadido a una solicitud de volcado de importación",

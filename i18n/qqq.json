@@ -9,7 +9,7 @@
 	},
 	"action-handle-import-dump-interwiki": "{{doc-action|handle-import-dump-interwiki}}",
 	"action-handle-import-dump-requests": "{{doc-action|handle-import-dump-requests}}",
-	"action-request-import-dump": "{{doc-action|request-import-dump}}",
+	"action-request-interwiki": "{{doc-action|request-interwiki}}",
 	"action-view-private-import-dump-requests": "{{doc-action|view-private-import-dump-requests}}",
 	"echo-category-title-requestinterwiki-new-request": "Echo category title for 'requestinterwiki-new-request'.",
 	"echo-category-title-requestinterwiki-request-comment": "Echo category title for 'requestinterwiki-request-comment'.",
@@ -106,7 +106,7 @@
 	"requestinterwiki-usergroups-none": "Displayed value if the requester has no user groups on the target wiki.",
 	"requestinterwikiprivate-log-header": "Header for the RequestInterwiki private log.",
 	"requestinterwikiprivate-log-name": "{{doc-logpage}}",
-	"ipb-action-request-import-dump": "The label for the action select option on [[Special:Block]] to block a user from requesting import dumps.",
+	"ipb-action-request-interwiki": "The label for the action select option on [[Special:Block]] to block a user from requesting import dumps.",
 	"log-action-filter-requestinterwiki": "{{doc-log-action-filter-type|requestinterwiki}}\n{{identical|Type of action}}\n{{related|Log-action-filter}}",
 	"log-action-filter-requestinterwiki-interwiki": "{{doc-log-action-filter-action|requestinterwiki|interwiki}}",
 	"log-action-filter-requestinterwiki-request": "{{doc-log-action-filter-action|requestinterwiki|request}}",
@@ -125,6 +125,6 @@
 	"RequestInterwikiQueue": "{{doc-special}}",
 	"right-handle-import-dump-interwiki": "{{doc-right|handle-import-dump-interwiki}}",
 	"right-handle-import-dump-requests": "{{doc-right|handle-import-dump-requests}}",
-	"right-request-import-dump": "{{doc-right|request-import-dump}}",
+	"right-request-interwiki": "{{doc-right|request-interwiki}}",
 	"right-view-private-import-dump-requests": "{{doc-right|view-private-import-dump-requests}}"
 }

@@ -6,7 +6,7 @@
 	},
 	"action-handle-import-dump-interwiki": "tratar de importações de cópias em ficheiro entre wikis",
 	"action-handle-import-dump-requests": "tratar de pedidos dos utilizadores para importação de cópias em ficheiro",
-	"action-request-import-dump": "pedir a importação de cópias em ficheiro",
+	"action-request-interwiki": "pedir a importação de cópias em ficheiro",
 	"action-view-private-import-dump-requests": "ver pedidos privados de importação de cópias em ficheiro",
 	"echo-category-title-requestinterwiki-new-request": "Pedido novo de importação de uma cópia em ficheiro",
 	"echo-category-title-requestinterwiki-request-comment": "Foi adicionado um comentário a um pedido de importação de uma cópia em ficheiro",
@@ -103,7 +103,7 @@
 	"requestinterwiki-usergroups-none": "nenhum",
 	"requestinterwikiprivate-log-header": "Este registo é de todos os pedidos de importação de cópias em ficheiro e de atualizações dos respetivos estados, para pedidos com destinos que são wikis privadas.",
 	"requestinterwikiprivate-log-name": "Registo de pedidos privados de importação de cópias em ficheiro",
-	"ipb-action-request-import-dump": "Pedir importação de cópias em ficheiro",
+	"ipb-action-request-interwiki": "Pedir importação de cópias em ficheiro",
 	"log-action-filter-requestinterwiki": "Tipo de operação:",
 	"log-action-filter-requestinterwiki-interwiki": "Modificações da tabela de interwikis",
 	"log-action-filter-requestinterwiki-request": "Novos pedidos submetidos",
@@ -122,6 +122,6 @@
 	"RequestInterwikiQueue": "Fila de espera de pedidos de importação de cópia em ficheiro",
 	"right-handle-import-dump-interwiki": "Tratar de importações de cópias em ficheiro entre wikis",
 	"right-handle-import-dump-requests": "Tratar de pedidos dos utilizadores para importação de cópias em ficheiro",
-	"right-request-import-dump": "Pedir importação de cópias em ficheiro",
+	"right-request-interwiki": "Pedir importação de cópias em ficheiro",
 	"right-view-private-import-dump-requests": "Ver pedidos privados de importação de cópias em ficheiro"
 }

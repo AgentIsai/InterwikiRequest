@@ -6,7 +6,7 @@
 	},
 	"action-handle-import-dump-interwiki": "obradu međuvikija za skladišne izvadke uvoza",
 	"action-handle-import-dump-requests": "obradu korisničkih zahtjeva za uvoze",
-	"action-request-import-dump": "zahtjev za skladišni izvadak uvoza",
+	"action-request-interwiki": "zahtjev za skladišni izvadak uvoza",
 	"action-view-private-import-dump-requests": "gledanje privatnih zahtjeva za skladišne izvadke uvoza",
 	"echo-category-title-requestinterwiki-new-request": "Novi zahtjev za skladišni izvadak uvoza",
 	"echo-category-title-requestinterwiki-request-comment": "Dodan je komentar u zahtjev za skladišni izvadak uvoza",
@@ -103,7 +103,7 @@
 	"requestinterwiki-usergroups-none": "ništa",
 	"requestinterwikiprivate-log-header": "Ovo je dnevnik svih zahtjeva za skladišne izvadke uvoza i statusnih izmjena zahtjeva s ciljevima koji su privatni vikiji.",
 	"requestinterwikiprivate-log-name": "Privatni dnevnik zahtjeva za skladišni izvadak uvoza",
-	"ipb-action-request-import-dump": "Zahtjevi za skladišne izvadke uvoza",
+	"ipb-action-request-interwiki": "Zahtjevi za skladišne izvadke uvoza",
 	"log-action-filter-requestinterwiki": "Vrsta radnje:",
 	"log-action-filter-requestinterwiki-interwiki": "Promjene table međuvikija",
 	"log-action-filter-requestinterwiki-request": "Novi podneseni zahtjevi",
@@ -122,6 +122,6 @@
 	"RequestInterwikiQueue": "Red čekanja zahtjeva za skladišni izvadak uvoza",
 	"right-handle-import-dump-interwiki": "Obrada međuvikija za skladišne izvadke uvoza",
 	"right-handle-import-dump-requests": "Obrada korisničkih zahtjeva za uvoze",
-	"right-request-import-dump": "Zahtjev za skladišni izvadak uvoza",
+	"right-request-interwiki": "Zahtjev za skladišni izvadak uvoza",
 	"right-view-private-import-dump-requests": "Pregledanje privatnih zahtjeva za skladišne izvadke uvoza"
 }

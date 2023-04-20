@@ -7,7 +7,7 @@
 	},
 	"action-handle-import-dump-interwiki": "requestinterwikis tussen wiki's af te handelen",
 	"action-handle-import-dump-requests": "aanvragen voor requestinterwikis van gebruikers af te handelen",
-	"action-request-import-dump": "requestinterwikis aan te vragen",
+	"action-request-interwiki": "requestinterwikis aan te vragen",
 	"action-view-private-import-dump-requests": "privé-requestinterwikiaanvragen te bekijken",
 	"echo-category-title-requestinterwiki-new-request": "Nieuwe requestinterwikiaanvraag",
 	"echo-category-title-requestinterwiki-request-comment": "Opmerking toegevoegd aan een requestinterwikiaanvraag",
@@ -104,7 +104,7 @@
 	"requestinterwiki-usergroups-none": "geen",
 	"requestinterwikiprivate-log-header": "Dit is een logboek van alle requestinterwikiaanvragen en statusupdates voor aanvragen met doelen die privéwiki's zijn.",
 	"requestinterwikiprivate-log-name": "Privélogboek requestinterwikiaanvragen",
-	"ipb-action-request-import-dump": "Requestinterwikis aanvragen",
+	"ipb-action-request-interwiki": "Requestinterwikis aanvragen",
 	"log-action-filter-requestinterwiki": "Soort handeling:",
 	"log-action-filter-requestinterwiki-interwiki": "Interwiki-tabelaanpassingen",
 	"log-action-filter-requestinterwiki-request": "Nieuwe verzoeken ingediend",
@@ -123,6 +123,6 @@
 	"RequestInterwikiQueue": "Wachtrij requestinterwikiverzoeken",
 	"right-handle-import-dump-interwiki": "Requestinterwikis tussen wiki's afhandelen",
 	"right-handle-import-dump-requests": "Aanvragen voor requestinterwikis van gebruikers afhandelen",
-	"right-request-import-dump": "Requestinterwikis aanvragen",
+	"right-request-interwiki": "Requestinterwikis aanvragen",
 	"right-view-private-import-dump-requests": "Privé-requestinterwikiaanvragen bekijken"
 }

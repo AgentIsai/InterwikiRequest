@@ -9,7 +9,7 @@
 	},
 	"action-handle-import-dump-interwiki": "обробляти інтервікі дампу імпорту",
 	"action-handle-import-dump-requests": "обробляти запити користувача на імпорт дампа",
-	"action-request-import-dump": "запит імпортних дампів",
+	"action-request-interwiki": "запит імпортних дампів",
 	"action-view-private-import-dump-requests": "переглядати приватні запити на імпорт дампа",
 	"echo-category-title-requestinterwiki-new-request": "Новий запит на імпорт дампа",
 	"echo-category-title-requestinterwiki-request-comment": "Додано коментар до запиту імпорту дампа",
