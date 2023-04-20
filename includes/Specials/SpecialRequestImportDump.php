@@ -1,6 +1,6 @@
 <?php
 
-namespace Miraheze\ImportDump\Specials;
+namespace Miraheze\RequestInterwiki\Specials;
 
 use EchoEvent;
 use ErrorPageError;
@@ -26,7 +26,7 @@ use UserNotLoggedIn;
 use WikiMap;
 use Wikimedia\Rdbms\ILBFactory;
 
-class SpecialRequestImportDump extends FormSpecialPage {
+class SpecialRequestRequestInterwiki extends FormSpecialPage {
 
 	/** @var ILBFactory */
 	private $dbLoadBalancerFactory;
@@ -52,7 +52,7 @@ class SpecialRequestImportDump extends FormSpecialPage {
 		RepoGroup $repoGroup,
 		UserFactory $userFactory
 	) {
-		parent::__construct( 'RequestImportDump', 'request-import-dump' );
+		parent::__construct( 'RequestInterwiki', 'request-import-dump' );
 
 		$this->dbLoadBalancerFactory = $dbLoadBalancerFactory;
 		$this->mimeAnalyzer = $mimeAnalyzer;
@@ -68,10 +68,10 @@ class SpecialRequestImportDump extends FormSpecialPage {
 		$this->setHeaders();
 
 		if (
-			$this->getConfig()->get( 'ImportDumpCentralWiki' ) &&
-			!WikiMap::isCurrentWikiId( $this->getConfig()->get( 'ImportDumpCentralWiki' ) )
+			$this->getConfig()->get( 'RequestInterwikiCentralWiki' ) &&
+			!WikiMap::isCurrentWikiId( $this->getConfig()->get( 'RequestInterwikiCentralWiki' ) )
 		) {
-			throw new ErrorPageError( 'importdump-notcentral', 'importdump-notcentral-text' );
+			throw new ErrorPageError( 'requestinterwiki-notcentral', 'requestinterwiki-notcentral-text' );
 		}
 
 		if ( !$this->getUser()->isRegistered() ) {
@@ -81,13 +81,13 @@ class SpecialRequestImportDump extends FormSpecialPage {
 				]
 			);
 
-			throw new UserNotLoggedIn( 'importdump-notloggedin', 'exception-nologin', [ $loginURL ] );
+			throw new UserNotLoggedIn( 'requestinterwiki-notloggedin', 'exception-nologin', [ $loginURL ] );
 		}
 
 		$this->checkPermissions();
 
-		if ( $this->getConfig()->get( 'ImportDumpHelpUrl' ) ) {
-			$this->getOutput()->addHelpLink( $this->getConfig()->get( 'ImportDumpHelpUrl' ), true );
+		if ( $this->getConfig()->get( 'RequestInterwikiHelpUrl' ) ) {
+			$this->getOutput()->addHelpLink( $this->getConfig()->get( 'RequestInterwikiHelpUrl' ), true );
 		}
 
 		$form = $this->getForm();
@@ -103,67 +103,36 @@ class SpecialRequestImportDump extends FormSpecialPage {
 		$formDescriptor = [
 			'source' => [
 				'type' => 'url',
-				'label-message' => 'importdump-label-source',
-				'help-message' => 'importdump-help-source',
+				'label-message' => 'requestinterwiki-label-source',
+				'help-message' => 'requestinterwiki-help-source',
 				'required' => true,
 			],
 			'target' => [
 				'type' => 'text',
-				'label-message' => 'importdump-label-target',
-				'help-message' => 'importdump-help-target',
+				'label-message' => 'requestinterwiki-label-target',
+				'help-message' => 'requestinterwiki-help-target',
 				'required' => true,
 				'validation-callback' => [ $this, 'isValidDatabase' ],
 			],
-		];
-
-		if (
-			UploadFromUrl::isEnabled() &&
-			UploadFromUrl::isAllowed( $this->getUser() ) === true
-		) {
-			$formDescriptor += [
-				'UploadSourceType' => [
-					'type' => 'radio',
-					'label-message' => 'importdump-label-upload-source-type',
-					'default' => 'File',
-					'options-messages' => [
-						'importdump-label-upload-source-file' => 'File',
-						'importdump-label-upload-source-url' => 'Url',
+			'interwiki-additions' => [
+				'type' => 'cloner',
+				'label-message' => 'requestinterwiki-label-additions',
+				'fields' => [
+						'value' => [
+							'type' => 'text',
+						],
+						'delete' => [
+							'type' => 'submit',
+							'default' => wfMessage( 'htmlform-cloner-delete' )->escaped(),
+							'flags' => [ 'destructive' ],
+						],
 					],
-				],
-				'UploadFile' => [
-					'type' => 'file',
-					'label-message' => 'importdump-label-upload-file',
-					'help-message' => 'importdump-help-upload-file',
-					'hide-if' => [ '!==', 'wpUploadSourceType', 'File' ],
-					'accept' => [ '.xml' ],
-					'required' => true,
-				],
-				'UploadFileURL' => [
-					'type' => 'url',
-					'label-message' => 'importdump-label-upload-file-url',
-					'help-message' => 'importdump-help-upload-file-url',
-					'hide-if' => [ '!==', 'wpUploadSourceType', 'Url' ],
-					'required' => true,
-				],
-			];
-		} else {
-			$formDescriptor += [
-				'UploadFile' => [
-					'type' => 'file',
-					'label-message' => 'importdump-label-upload-file',
-					'help-message' => 'importdump-help-upload-file',
-					'accept' => [ '.xml' ],
-					'required' => true,
-				],
-			];
-		}
-
-		$formDescriptor += [
+			],
 			'reason' => [
 				'type' => 'textarea',
 				'rows' => 4,
-				'label-message' => 'importdump-label-reason',
-				'help-message' => 'importdump-help-reason',
+				'label-message' => 'requestinterwiki-label-reason',
+				'help-message' => 'requestinterwiki-help-reason',
 				'required' => true,
 				'validation-callback' => [ $this, 'isValidReason' ],
 			],
@@ -191,7 +160,7 @@ class SpecialRequestImportDump extends FormSpecialPage {
 			return Status::newFatal( 'actionthrottledtext' );
 		}
 
-		$centralWiki = $this->getConfig()->get( 'ImportDumpCentralWiki' );
+		$centralWiki = $this->getConfig()->get( 'RequestInterwikiCentralWiki' );
 		if ( $centralWiki ) {
 			$dbw = $this->dbLoadBalancerFactory->getMainLB(
 				$centralWiki
@@ -201,7 +170,7 @@ class SpecialRequestImportDump extends FormSpecialPage {
 		}
 
 		$duplicate = $dbw->newSelectQueryBuilder()
-			->table( 'importdump_requests' )
+			->table( 'requestinterwiki_requests' )
 			->field( '*' )
 			->where( [
 				'request_reason' => $data['reason'],
@@ -211,7 +180,7 @@ class SpecialRequestImportDump extends FormSpecialPage {
 			->fetchRow();
 
 		if ( (bool)$duplicate ) {
-			return Status::newFatal( 'importdump-duplicate-request' );
+			return Status::newFatal( 'requestinterwiki-duplicate-request' );
 		}
 
 		$timestamp = $dbw->timestamp();
@@ -266,8 +235,8 @@ class SpecialRequestImportDump extends FormSpecialPage {
 
 		$status = $repo->publish(
 			$file->getPath(),
-			'/ImportDump/' . $fileName,
-			'/ImportDump/archive/' . $fileName,
+			'/RequestInterwiki/' . $fileName,
+			'/RequestInterwiki/archive/' . $fileName,
 			FileRepo::DELETE_SOURCE
 		);
 
@@ -276,7 +245,7 @@ class SpecialRequestImportDump extends FormSpecialPage {
 		}
 
 		$dbw->insert(
-			'importdump_requests',
+			'requestinterwiki_requests',
 			[
 				'request_source' => $data['source'],
 				'request_target' => $data['target'],
@@ -290,13 +259,13 @@ class SpecialRequestImportDump extends FormSpecialPage {
 		);
 
 		$requestID = (string)$dbw->insertId();
-		$requestQueueLink = SpecialPage::getTitleValueFor( 'RequestImportDumpQueue', $requestID );
+		$requestQueueLink = SpecialPage::getTitleValueFor( 'RequestRequestInterwikiQueue', $requestID );
 
 		$requestLink = $this->getLinkRenderer()->makeLink( $requestQueueLink, "#{$requestID}" );
 
 		$this->getOutput()->addHTML(
 			Html::successBox(
-				$this->msg( 'importdump-success' )->rawParams( $requestLink )->escaped()
+				$this->msg( 'requestinterwiki-success' )->rawParams( $requestLink )->escaped()
 			)
 		);
 
@@ -318,7 +287,7 @@ class SpecialRequestImportDump extends FormSpecialPage {
 
 		if (
 			ExtensionRegistry::getInstance()->isLoaded( 'Echo' ) &&
-			$this->getConfig()->get( 'ImportDumpUsersNotifiedOnAllRequests' )
+			$this->getConfig()->get( 'RequestInterwikiUsersNotifiedOnAllRequests' )
 		) {
 			$this->sendNotifications( $data['reason'], $this->getUser()->getName(), $requestID, $data['target'] );
 		}
@@ -335,11 +304,11 @@ class SpecialRequestImportDump extends FormSpecialPage {
 			!ExtensionRegistry::getInstance()->isLoaded( 'CreateWiki' ) ||
 			!$this->getConfig()->get( 'CreateWikiUsePrivateWikis' )
 		) {
-			return 'importdump';
+			return 'requestinterwiki';
 		}
 
 		$remoteWiki = new RemoteWiki( $target );
-		return $remoteWiki->isPrivate() ? 'importdumpprivate' : 'importdump';
+		return $remoteWiki->isPrivate() ? 'requestinterwikiprivate' : 'requestinterwiki';
 	}
 
 	/**
@@ -353,17 +322,17 @@ class SpecialRequestImportDump extends FormSpecialPage {
 			array_map(
 				function ( string $userName ): ?User {
 					return $this->userFactory->newFromName( $userName );
-				}, $this->getConfig()->get( 'ImportDumpUsersNotifiedOnAllRequests' )
+				}, $this->getConfig()->get( 'RequestInterwikiUsersNotifiedOnAllRequests' )
 			)
 		);
 
-		$requestLink = SpecialPage::getTitleFor( 'RequestImportDumpQueue', $requestID )->getFullURL();
+		$requestLink = SpecialPage::getTitleFor( 'RequestRequestInterwikiQueue', $requestID )->getFullURL();
 
 		foreach ( $notifiedUsers as $receiver ) {
 			if (
 				!$receiver->isAllowed( 'handle-import-dump-requests' ) ||
 				(
-					$this->getLogType( $target ) === 'importdumpprivate' &&
+					$this->getLogType( $target ) === 'requestinterwikiprivate' &&
 					!$receiver->isAllowed( 'view-private-import-dump-requests' )
 				)
 			) {
@@ -371,7 +340,7 @@ class SpecialRequestImportDump extends FormSpecialPage {
 			}
 
 			EchoEvent::create( [
-				'type' => 'importdump-new-request',
+				'type' => 'requestinterwiki-new-request',
 				'extra' => [
 					'request-id' => $requestID,
 					'request-url' => $requestLink,
@@ -391,7 +360,7 @@ class SpecialRequestImportDump extends FormSpecialPage {
 	 */
 	public function isValidDatabase( ?string $target ) {
 		if ( !in_array( $target, $this->getConfig()->get( 'LocalDatabases' ) ) ) {
-			return Status::newFatal( 'importdump-invalid-target' )->getMessage();
+			return Status::newFatal( 'requestinterwiki-invalid-target' )->getMessage();
 		}
 
 		return true;
