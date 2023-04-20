@@ -2,12 +2,12 @@
 	$( function () {
 		var tabs, previousTab, switchingNoHash;
 
-		tabs = OO.ui.infuse( $( '.importdump-tabs' ) );
+		tabs = OO.ui.infuse( $( '.requestinterwiki-tabs' ) );
 
-		tabs.$element.addClass( 'importdump-tabs-infused' );
+		tabs.$element.addClass( 'requestinterwiki-tabs-infused' );
 
 		function enhancePanel( panel ) {
-			var $infuse = $( panel.$element ).find( '.importdump-infuse' );
+			var $infuse = $( panel.$element ).find( '.requestinterwiki-infuse' );
 			$infuse.each( function () {
 				try {
 					OO.ui.infuse( this );
@@ -50,7 +50,7 @@
 		 * @param {boolean} [noHash] A hash will be set according to the current
 		 *  open section. Use this flag to suppress this.
 		 */
-		function switchImportDumpTab( name, noHash ) {
+		function switchRequestInterwikiTab( name, noHash ) {
 			if ( noHash ) {
 				switchingNoHash = true;
 			}
@@ -67,15 +67,15 @@
 			var hash = location.hash,
 				matchedElement, $parentSection;
 			if ( hash.match( /^#mw-section-[\w-]+$/ ) ) {
-				mw.storage.session.remove( 'importdump-prevTab' );
-				switchImportDumpTab( hash.slice( 1 ) );
+				mw.storage.session.remove( 'requestinterwiki-prevTab' );
+				switchRequestInterwikiTab( hash.slice( 1 ) );
 			} else if ( hash.match( /^#mw-[\w-]+$/ ) ) {
 				matchedElement = document.getElementById( hash.slice( 1 ) );
-				$parentSection = $( matchedElement ).closest( '.importdump-section-fieldset' );
+				$parentSection = $( matchedElement ).closest( '.requestinterwiki-section-fieldset' );
 				if ( $parentSection.length ) {
-					mw.storage.session.remove( 'importdump-prevTab' );
+					mw.storage.session.remove( 'requestinterwiki-prevTab' );
 					// Switch to proper tab and scroll to selected item.
-					switchImportDumpTab( $parentSection.attr( 'id' ), true );
+					switchRequestInterwikiTab( $parentSection.attr( 'id' ), true );
 					matchedElement.scrollIntoView();
 				}
 			}
@@ -86,23 +86,23 @@
 			if ( hash.match( /^#mw-[\w-]+/ ) ) {
 				detectHash();
 			} else if ( hash === '' ) {
-				switchImportDumpTab( $( '[id*=mw-section-]' ).attr( 'id' ), true );
+				switchRequestInterwikiTab( $( '[id*=mw-section-]' ).attr( 'id' ), true );
 			}
 		} )
 			// Run the function immediately to select the proper tab on startup.
 			.trigger( 'hashchange' );
 
 		// Restore the active tab after saving
-		previousTab = mw.storage.session.get( 'importdump-prevTab' );
+		previousTab = mw.storage.session.get( 'requestinterwiki-prevTab' );
 		if ( previousTab ) {
-			switchImportDumpTab( previousTab, true );
+			switchRequestInterwikiTab( previousTab, true );
 			// Deleting the key, the tab states should be reset until we press Save
-			mw.storage.session.remove( 'importdump-prevTab' );
+			mw.storage.session.remove( 'requestinterwiki-prevTab' );
 		}
 
-		$( '#importdump-form' ).on( 'submit', function () {
+		$( '#requestinterwiki-form' ).on( 'submit', function () {
 			var value = tabs.getCurrentTabPanelName();
-			mw.storage.session.set( 'importdump-prevTab', value );
+			mw.storage.session.set( 'requestinterwiki-prevTab', value );
 		} );
 	} );
 }() );

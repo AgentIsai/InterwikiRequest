@@ -1,6 +1,6 @@
 <?php
 
-namespace Miraheze\ImportDump;
+namespace Miraheze\RequestInterwiki;
 
 use Config;
 use EchoEvent;
@@ -24,17 +24,17 @@ use Wikimedia\Rdbms\DBConnRef;
 use Wikimedia\Rdbms\ILBFactory;
 use Wikimedia\Rdbms\SelectQueryBuilder;
 
-class ImportDumpRequestManager {
+class RequestInterwikiRequestManager {
 
 	private const SYSTEM_USERS = [
-		'ImportDump Extension',
-		'ImportDump Status Update',
+		'RequestInterwiki Extension',
+		'RequestInterwiki Status Update',
 	];
 
 	public const CONSTRUCTOR_OPTIONS = [
-		'ImportDumpCentralWiki',
-		'ImportDumpInterwikiMap',
-		'ImportDumpScriptCommand',
+		'RequestInterwikiCentralWiki',
+		'RequestInterwikiInterwikiMap',
+		'RequestInterwikiScriptCommand',
 	];
 
 	/** @var Config */
@@ -114,7 +114,7 @@ class ImportDumpRequestManager {
 	public function fromID( int $requestID ) {
 		$this->ID = $requestID;
 
-		$centralWiki = $this->options->get( 'ImportDumpCentralWiki' );
+		$centralWiki = $this->options->get( 'RequestInterwikiCentralWiki' );
 		if ( $centralWiki ) {
 			$this->dbw = $this->dbLoadBalancerFactory->getMainLB(
 				$centralWiki
@@ -124,7 +124,7 @@ class ImportDumpRequestManager {
 		}
 
 		$this->row = $this->dbw->newSelectQueryBuilder()
-			->table( 'importdump_requests' )
+			->table( 'requestinterwiki_requests' )
 			->field( '*' )
 			->where( [ 'request_id' => $requestID ] )
 			->caller( __METHOD__ )
@@ -144,7 +144,7 @@ class ImportDumpRequestManager {
 	 */
 	public function addComment( string $comment, User $user ) {
 		$this->dbw->insert(
-			'importdump_request_comments',
+			'requestinterwiki_request_comments',
 			[
 				'request_id' => $this->ID,
 				'request_comment_text' => $comment,
@@ -158,7 +158,7 @@ class ImportDumpRequestManager {
 			ExtensionRegistry::getInstance()->isLoaded( 'Echo' ) &&
 			!in_array( $user->getName(), self::SYSTEM_USERS )
 		) {
-			$this->sendNotification( $comment, 'importdump-request-comment', $user );
+			$this->sendNotification( $comment, 'requestinterwiki-request-comment', $user );
 		}
 	}
 
@@ -168,11 +168,11 @@ class ImportDumpRequestManager {
 	 * @param User $user
 	 */
 	public function logStatusUpdate( string $comment, string $newStatus, User $user ) {
-		$requestQueueLink = SpecialPage::getTitleValueFor( 'RequestImportDumpQueue', (string)$this->ID );
+		$requestQueueLink = SpecialPage::getTitleValueFor( 'RequestInterwikiQueue', (string)$this->ID );
 		$requestLink = $this->linkRenderer->makeLink( $requestQueueLink, "#{$this->ID}" );
 
 		$logEntry = new ManualLogEntry(
-			$this->isPrivate() ? 'importdumpprivate' : 'importdump',
+			$this->isPrivate() ? 'requestinterwikiprivate' : 'requestinterwiki',
 			'statusupdate'
 		);
 
@@ -187,7 +187,7 @@ class ImportDumpRequestManager {
 			[
 				'4::requestLink' => Message::rawParam( $requestLink ),
 				'5::requestStatus' => strtolower( $this->messageLocalizer->msg(
-					'importdump-label-' . $newStatus
+					'requestinterwiki-label-' . $newStatus
 				)->inContentLanguage()->text() ),
 			]
 		);
@@ -202,7 +202,7 @@ class ImportDumpRequestManager {
 	 * @param User $user
 	 */
 	public function sendNotification( string $comment, string $type, User $user ) {
-		$requestLink = SpecialPage::getTitleFor( 'RequestImportDumpQueue', (string)$this->ID )->getFullURL();
+		$requestLink = SpecialPage::getTitleFor( 'RequestInterwikiQueue', (string)$this->ID )->getFullURL();
 
 		$involvedUsers = array_values( array_filter(
 			array_diff( $this->getInvolvedUsers(), [ $user ] )
@@ -227,7 +227,7 @@ class ImportDumpRequestManager {
 	 */
 	public function getComments(): array {
 		$res = $this->dbw->newSelectQueryBuilder()
-			->table( 'importdump_request_comments' )
+			->table( 'requestinterwiki_request_comments' )
 			->field( '*' )
 			->where( [ 'request_id' => $this->ID ] )
 			->orderBy( 'request_comment_timestamp', SelectQueryBuilder::SORT_DESC )
@@ -289,11 +289,11 @@ class ImportDumpRequestManager {
 
 		$this->interwikiLookup->invalidateCache( $prefix );
 
-		$requestQueueLink = SpecialPage::getTitleValueFor( 'RequestImportDumpQueue', (string)$this->ID );
+		$requestQueueLink = SpecialPage::getTitleValueFor( 'RequestInterwikiQueue', (string)$this->ID );
 		$requestLink = $this->linkRenderer->makeLink( $requestQueueLink, "#{$this->ID}" );
 
 		$logEntry = new ManualLogEntry(
-			$this->isPrivate() ? 'importdumpprivate' : 'importdump',
+			$this->isPrivate() ? 'requestinterwikiprivate' : 'requestinterwiki',
 			'interwiki'
 		);
 
@@ -364,14 +364,14 @@ class ImportDumpRequestManager {
 			}
 		}
 
-		if ( $this->options->get( 'ImportDumpInterwikiMap' ) ) {
+		if ( $this->options->get( 'RequestInterwikiInterwikiMap' ) ) {
 			$parsedSource = parse_url( $this->getSource(), PHP_URL_HOST ) ?: '';
 			$domain = explode( '.', $parsedSource )[1] ?? '';
 
 			if ( $domain ) {
 				$domain .= '.' . ( explode( '.', $parsedSource )[2] ?? '' );
-				if ( $this->options->get( 'ImportDumpInterwikiMap' )[$domain] ?? '' ) {
-					$domain = $this->options->get( 'ImportDumpInterwikiMap' )[$domain];
+				if ( $this->options->get( 'RequestInterwikiInterwikiMap' )[$domain] ?? '' ) {
+					$domain = $this->options->get( 'RequestInterwikiInterwikiMap' )[$domain];
 					$subdomain = explode( '.', $parsedSource )[0] ?? '';
 
 					if ( $subdomain ) {
@@ -388,7 +388,7 @@ class ImportDumpRequestManager {
 	 * @return string
 	 */
 	public function getCommand(): string {
-		$command = $this->options->get( 'ImportDumpScriptCommand' );
+		$command = $this->options->get( 'RequestInterwikiScriptCommand' );
 
 		if ( !$this->getInterwikiPrefix() ) {
 			$command = preg_replace( '/--username-prefix=?/', '', $command );
@@ -415,7 +415,7 @@ class ImportDumpRequestManager {
 		$userRightsProxy = UserRightsProxy::newFromName( $this->getTarget(), $userName );
 
 		if ( !$userRightsProxy ) {
-			return [ $this->messageLocalizer->msg( 'importdump-usergroups-none' )->text() ];
+			return [ $this->messageLocalizer->msg( 'requestinterwiki-usergroups-none' )->text() ];
 		}
 
 		return $this->userGroupManagerFactory
@@ -430,7 +430,7 @@ class ImportDumpRequestManager {
 		$fileName = $this->getTarget() . '-' . $this->getTimestamp() . '.xml';
 
 		$localRepo = $this->repoGroup->getLocalRepo();
-		$zonePath = $localRepo->getZonePath( 'public' ) . '/ImportDump';
+		$zonePath = $localRepo->getZonePath( 'public' ) . '/RequestInterwiki';
 
 		return $zonePath . '/' . $fileName;
 	}
@@ -544,7 +544,7 @@ class ImportDumpRequestManager {
 	 */
 	public function setLocked( int $locked ) {
 		$this->dbw->update(
-			'importdump_requests',
+			'requestinterwiki_requests',
 			[
 				'request_locked' => $locked,
 			],
@@ -560,7 +560,7 @@ class ImportDumpRequestManager {
 	 */
 	public function setPrivate( int $private ) {
 		$this->dbw->update(
-			'importdump_requests',
+			'requestinterwiki_requests',
 			[
 				'request_private' => $private,
 			],
@@ -576,7 +576,7 @@ class ImportDumpRequestManager {
 	 */
 	public function setReason( string $reason ) {
 		$this->dbw->update(
-			'importdump_requests',
+			'requestinterwiki_requests',
 			[
 				'request_reason' => $reason,
 			],
@@ -592,7 +592,7 @@ class ImportDumpRequestManager {
 	 */
 	public function setSource( string $source ) {
 		$this->dbw->update(
-			'importdump_requests',
+			'requestinterwiki_requests',
 			[
 				'request_source' => $source,
 			],
@@ -608,7 +608,7 @@ class ImportDumpRequestManager {
 	 */
 	public function setStatus( string $status ) {
 		$this->dbw->update(
-			'importdump_requests',
+			'requestinterwiki_requests',
 			[
 				'request_status' => $status,
 			],
@@ -624,7 +624,7 @@ class ImportDumpRequestManager {
 	 */
 	public function setTarget( string $target ) {
 		$this->dbw->update(
-			'importdump_requests',
+			'requestinterwiki_requests',
 			[
 				'request_target' => $target,
 			],

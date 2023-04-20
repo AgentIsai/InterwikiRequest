@@ -1,6 +1,6 @@
 <?php
 
-namespace Miraheze\ImportDump\Hooks\Handlers;
+namespace Miraheze\RequestInterwiki\Hooks\Handlers;
 
 use DatabaseUpdater;
 use MediaWiki\Installer\Hook\LoadExtensionSchemaUpdatesHook;
@@ -14,6 +14,6 @@ class Installer implements LoadExtensionSchemaUpdatesHook {
 		$dbType = $updater->getDB()->getType();
 		$dir = __DIR__ . '/../../../sql';
 
-		$updater->addExtensionTable( 'importdump_requests', "$dir/$dbType/tables-generated.sql" );
+		$updater->addExtensionTable( 'requestinterwiki_requests', "$dir/$dbType/tables-generated.sql" );
 	}
 }

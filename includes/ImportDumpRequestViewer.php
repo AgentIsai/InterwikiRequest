@@ -1,6 +1,6 @@
 <?php
 
-namespace Miraheze\ImportDump;
+namespace Miraheze\RequestInterwiki;
 
 use Config;
 use Html;
@@ -13,7 +13,7 @@ use User;
 use UserNotLoggedIn;
 use WikiMap;
 
-class ImportDumpRequestViewer {
+class RequestInterwikiRequestViewer {
 
 	/** @var Config */
 	private $config;
@@ -21,8 +21,8 @@ class ImportDumpRequestViewer {
 	/** @var IContextSource */
 	private $context;
 
-	/** @var ImportDumpRequestManager */
-	private $importDumpRequestManager;
+	/** @var RequestInterwikiRequestManager */
+	private $requestInterwikiRequestManager;
 
 	/** @var PermissionManager */
 	private $permissionManager;
@@ -30,18 +30,18 @@ class ImportDumpRequestViewer {
 	/**
 	 * @param Config $config
 	 * @param IContextSource $context
-	 * @param ImportDumpRequestManager $importDumpRequestManager
+	 * @param RequestInterwikiRequestManager $requestInterwikiRequestManager
 	 * @param PermissionManager $permissionManager
 	 */
 	public function __construct(
 		Config $config,
 		IContextSource $context,
-		ImportDumpRequestManager $importDumpRequestManager,
+		RequestInterwikiRequestManager $requestInterwikiRequestManager,
 		PermissionManager $permissionManager
 	) {
 		$this->config = $config;
 		$this->context = $context;
-		$this->importDumpRequestManager = $importDumpRequestManager;
+		$this->requestInterwikiRequestManager = $requestInterwikiRequestManager;
 		$this->permissionManager = $permissionManager;
 	}
 
@@ -52,86 +52,86 @@ class ImportDumpRequestViewer {
 		$user = $this->context->getUser();
 
 		if (
-			$this->importDumpRequestManager->isPrivate() &&
-			$user->getName() !== $this->importDumpRequestManager->getRequester()->getName() &&
+			$this->requestInterwikiRequestManager->isPrivate() &&
+			$user->getName() !== $this->requestInterwikiRequestManager->getRequester()->getName() &&
 			!$this->permissionManager->userHasRight( $user, 'view-private-import-dump-requests' )
 		) {
 			$this->context->getOutput()->addHTML(
-				Html::errorBox( $this->context->msg( 'importdump-private' )->escaped() )
+				Html::errorBox( $this->context->msg( 'requestinterwiki-private' )->escaped() )
 			);
 
 			return [];
 		}
 
-		if ( $this->importDumpRequestManager->isLocked() ) {
+		if ( $this->requestInterwikiRequestManager->isLocked() ) {
 			$this->context->getOutput()->addHTML(
-				Html::errorBox( $this->context->msg( 'importdump-request-locked' )->escaped() )
+				Html::errorBox( $this->context->msg( 'requestinterwiki-request-locked' )->escaped() )
 			);
 		}
 
 		$formDescriptor = [
 			'source' => [
-				'label-message' => 'importdump-label-source',
+				'label-message' => 'requestinterwiki-label-source',
 				'type' => 'url',
 				'readonly' => true,
 				'section' => 'details',
-				'default' => $this->importDumpRequestManager->getSource(),
+				'default' => $this->requestInterwikiRequestManager->getSource(),
 			],
 			'target' => [
-				'label-message' => 'importdump-label-target',
+				'label-message' => 'requestinterwiki-label-target',
 				'type' => 'text',
 				'readonly' => true,
 				'section' => 'details',
-				'default' => $this->importDumpRequestManager->getTarget(),
+				'default' => $this->requestInterwikiRequestManager->getTarget(),
 			],
 			'requester' => [
-				'label-message' => 'importdump-label-requester',
+				'label-message' => 'requestinterwiki-label-requester',
 				'type' => 'info',
 				'section' => 'details',
-				'default' => htmlspecialchars( $this->importDumpRequestManager->getRequester()->getName() ) .
+				'default' => htmlspecialchars( $this->requestInterwikiRequestManager->getRequester()->getName() ) .
 					Linker::userToolLinks(
-						$this->importDumpRequestManager->getRequester()->getId(),
-						$this->importDumpRequestManager->getRequester()->getName()
+						$this->requestInterwikiRequestManager->getRequester()->getId(),
+						$this->requestInterwikiRequestManager->getRequester()->getName()
 					),
 				'raw' => true,
 			],
 			'requestedDate' => [
-				'label-message' => 'importdump-label-requested-date',
+				'label-message' => 'requestinterwiki-label-requested-date',
 				'type' => 'info',
 				'section' => 'details',
 				'default' => $this->context->getLanguage()->timeanddate(
-					$this->importDumpRequestManager->getTimestamp(), true
+					$this->requestInterwikiRequestManager->getTimestamp(), true
 				),
 			],
 			'status' => [
-				'label-message' => 'importdump-label-status',
+				'label-message' => 'requestinterwiki-label-status',
 				'type' => 'text',
 				'readonly' => true,
 				'section' => 'details',
 				'default' => $this->context->msg(
-					'importdump-label-' . $this->importDumpRequestManager->getStatus()
+					'requestinterwiki-label-' . $this->requestInterwikiRequestManager->getStatus()
 				)->text(),
 			],
 			'reason' => [
 				'type' => 'textarea',
 				'rows' => 4,
 				'readonly' => true,
-				'label-message' => 'importdump-label-reason',
-				'default' => $this->importDumpRequestManager->getReason(),
+				'label-message' => 'requestinterwiki-label-reason',
+				'default' => $this->requestInterwikiRequestManager->getReason(),
 				'raw' => true,
-				'cssclass' => 'importdump-infuse',
+				'cssclass' => 'requestinterwiki-infuse',
 				'section' => 'details',
 			],
 		];
 
-		foreach ( $this->importDumpRequestManager->getComments() as $comment ) {
+		foreach ( $this->requestInterwikiRequestManager->getComments() as $comment ) {
 			$formDescriptor['comment' . $comment['timestamp'] ] = [
 				'type' => 'textarea',
 				'readonly' => true,
 				'section' => 'comments',
 				'rows' => 4,
 				'label-message' => [
-					'importdump-header-comment-withtimestamp',
+					'requestinterwiki-header-comment-withtimestamp',
 					$comment['user']->getName(),
 					$this->context->getLanguage()->timeanddate( $comment['timestamp'], true ),
 				],
@@ -141,88 +141,88 @@ class ImportDumpRequestViewer {
 
 		if (
 			$this->permissionManager->userHasRight( $user, 'handle-import-dump-requests' ) ||
-			$user->getActorId() === $this->importDumpRequestManager->getRequester()->getActorId()
+			$user->getActorId() === $this->requestInterwikiRequestManager->getRequester()->getActorId()
 		) {
 			$formDescriptor += [
 				'comment' => [
 					'type' => 'textarea',
 					'rows' => 4,
-					'label-message' => 'importdump-label-comment',
+					'label-message' => 'requestinterwiki-label-comment',
 					'section' => 'comments',
 					'validation-callback' => [ $this, 'isValidComment' ],
-					'disabled' => $this->importDumpRequestManager->isLocked(),
+					'disabled' => $this->requestInterwikiRequestManager->isLocked(),
 				],
 				'submit-comment' => [
 					'type' => 'submit',
-					'default' => $this->context->msg( 'importdump-label-add-comment' )->text(),
+					'default' => $this->context->msg( 'requestinterwiki-label-add-comment' )->text(),
 					'section' => 'comments',
-					'disabled' => $this->importDumpRequestManager->isLocked(),
+					'disabled' => $this->requestInterwikiRequestManager->isLocked(),
 				],
 				'edit-source' => [
-					'label-message' => 'importdump-label-source',
+					'label-message' => 'requestinterwiki-label-source',
 					'type' => 'url',
 					'section' => 'editing',
 					'required' => true,
-					'default' => $this->importDumpRequestManager->getSource(),
-					'disabled' => $this->importDumpRequestManager->isLocked(),
+					'default' => $this->requestInterwikiRequestManager->getSource(),
+					'disabled' => $this->requestInterwikiRequestManager->isLocked(),
 				],
 				'edit-target' => [
-					'label-message' => 'importdump-label-target',
+					'label-message' => 'requestinterwiki-label-target',
 					'type' => 'text',
 					'section' => 'editing',
 					'required' => true,
-					'default' => $this->importDumpRequestManager->getTarget(),
+					'default' => $this->requestInterwikiRequestManager->getTarget(),
 					'validation-callback' => [ $this, 'isValidDatabase' ],
-					'disabled' => $this->importDumpRequestManager->isLocked(),
+					'disabled' => $this->requestInterwikiRequestManager->isLocked(),
 				],
 				'edit-reason' => [
 					'type' => 'textarea',
 					'rows' => 4,
-					'label-message' => 'importdump-label-reason',
+					'label-message' => 'requestinterwiki-label-reason',
 					'section' => 'editing',
 					'required' => true,
-					'default' => $this->importDumpRequestManager->getReason(),
+					'default' => $this->requestInterwikiRequestManager->getReason(),
 					'validation-callback' => [ $this, 'isValidReason' ],
-					'disabled' => $this->importDumpRequestManager->isLocked(),
+					'disabled' => $this->requestInterwikiRequestManager->isLocked(),
 					'raw' => true,
 				],
 				'submit-edit' => [
 					'type' => 'submit',
-					'default' => $this->context->msg( 'importdump-label-edit-request' )->text(),
+					'default' => $this->context->msg( 'requestinterwiki-label-edit-request' )->text(),
 					'section' => 'editing',
-					'disabled' => $this->importDumpRequestManager->isLocked(),
+					'disabled' => $this->requestInterwikiRequestManager->isLocked(),
 				],
 			];
 		}
 
 		if ( $this->permissionManager->userHasRight( $user, 'handle-import-dump-requests' ) ) {
 			$validRequest = true;
-			$status = $this->importDumpRequestManager->getStatus();
+			$status = $this->requestInterwikiRequestManager->getStatus();
 
-			if ( $this->importDumpRequestManager->fileExists() ) {
-				$fileInfo = $this->context->msg( 'importdump-info-command' )->plaintextParams(
-					$this->importDumpRequestManager->getCommand()
+			if ( $this->requestInterwikiRequestManager->fileExists() ) {
+				$fileInfo = $this->context->msg( 'requestinterwiki-info-command' )->plaintextParams(
+					$this->requestInterwikiRequestManager->getCommand()
 				)->parse();
 
 				$fileInfo .= Html::element( 'button', [
 						'type' => 'button',
 						'onclick' => 'navigator.clipboard.writeText( $( \'.mw-message-box-notice code\' ).text() );',
 					],
-					$this->context->msg( 'importdump-button-copy' )->text()
+					$this->context->msg( 'requestinterwiki-button-copy' )->text()
 				);
 
-				if ( $this->importDumpRequestManager->getFileSize() > 0 ) {
+				if ( $this->requestInterwikiRequestManager->getFileSize() > 0 ) {
 					$fileInfo .= Html::element( 'br' );
-					$fileInfo .= $this->context->msg( 'importdump-info-filesize' )->sizeParams(
-						$this->importDumpRequestManager->getFileSize()
+					$fileInfo .= $this->context->msg( 'requestinterwiki-info-filesize' )->sizeParams(
+						$this->requestInterwikiRequestManager->getFileSize()
 					)->parse();
 				}
 
 				$info = Html::noticeBox( $fileInfo, '' );
 			} else {
 				$info = Html::errorBox(
-					$this->context->msg( 'importdump-info-no-file-found',
-						$this->importDumpRequestManager->getFilePath()
+					$this->context->msg( 'requestinterwiki-info-no-file-found',
+						$this->requestInterwikiRequestManager->getFilePath()
 					)->escaped()
 				);
 
@@ -233,35 +233,35 @@ class ImportDumpRequestViewer {
 			}
 
 			$info .= Html::noticeBox(
-				$this->context->msg( 'importdump-info-groups',
-					$this->importDumpRequestManager->getRequester()->getName(),
-					$this->importDumpRequestManager->getTarget(),
+				$this->context->msg( 'requestinterwiki-info-groups',
+					$this->requestInterwikiRequestManager->getRequester()->getName(),
+					$this->requestInterwikiRequestManager->getTarget(),
 					$this->context->getLanguage()->commaList(
-						$this->importDumpRequestManager->getUserGroupsFromTarget()
+						$this->requestInterwikiRequestManager->getUserGroupsFromTarget()
 					)
 				)->escaped(),
 				''
 			);
 
-			if ( $this->importDumpRequestManager->isPrivate() ) {
+			if ( $this->requestInterwikiRequestManager->isPrivate() ) {
 				$info .= Html::warningBox(
-					$this->context->msg( 'importdump-info-request-private' )->escaped()
+					$this->context->msg( 'requestinterwiki-info-request-private' )->escaped()
 				);
 			}
 
-			if ( $this->importDumpRequestManager->getRequester()->getBlock() ) {
+			if ( $this->requestInterwikiRequestManager->getRequester()->getBlock() ) {
 				$info .= Html::warningBox(
-					$this->context->msg( 'importdump-info-requester-locally-blocked',
-						$this->importDumpRequestManager->getRequester()->getName(),
+					$this->context->msg( 'requestinterwiki-info-requester-locally-blocked',
+						$this->requestInterwikiRequestManager->getRequester()->getName(),
 						WikiMap::getCurrentWikiId()
 					)->escaped()
 				);
 			}
 
-			if ( $this->importDumpRequestManager->getRequester()->getGlobalBlock() ) {
+			if ( $this->requestInterwikiRequestManager->getRequester()->getGlobalBlock() ) {
 				$info .= Html::errorBox(
-					$this->context->msg( 'importdump-info-requester-globally-blocked',
-						$this->importDumpRequestManager->getRequester()->getName()
+					$this->context->msg( 'requestinterwiki-info-requester-globally-blocked',
+						$this->requestInterwikiRequestManager->getRequester()->getName()
 					)->escaped()
 				);
 
@@ -271,10 +271,10 @@ class ImportDumpRequestViewer {
 				}
 			}
 
-			if ( $this->importDumpRequestManager->getRequester()->isLocked() ) {
+			if ( $this->requestInterwikiRequestManager->getRequester()->isLocked() ) {
 				$info .= Html::errorBox(
-					$this->context->msg( 'importdump-info-requester-locked',
-						$this->importDumpRequestManager->getRequester()->getName()
+					$this->context->msg( 'requestinterwiki-info-requester-locked',
+						$this->requestInterwikiRequestManager->getRequester()->getName()
 					)->escaped()
 				);
 
@@ -284,11 +284,11 @@ class ImportDumpRequestViewer {
 				}
 			}
 
-			if ( !$this->importDumpRequestManager->getInterwikiPrefix() ) {
+			if ( !$this->requestInterwikiRequestManager->getInterwikiPrefix() ) {
 				$info .= Html::errorBox(
-					$this->context->msg( 'importdump-info-no-interwiki-prefix',
-						$this->importDumpRequestManager->getTarget(),
-						parse_url( $this->importDumpRequestManager->getSource(), PHP_URL_HOST )
+					$this->context->msg( 'requestinterwiki-info-no-interwiki-prefix',
+						$this->requestInterwikiRequestManager->getTarget(),
+						parse_url( $this->requestInterwikiRequestManager->getSource(), PHP_URL_HOST )
 					)->escaped()
 				);
 			}
@@ -302,8 +302,8 @@ class ImportDumpRequestViewer {
 				],
 				'handle-lock' => [
 					'type' => 'check',
-					'label-message' => 'importdump-label-lock',
-					'default' => $this->importDumpRequestManager->isLocked(),
+					'label-message' => 'requestinterwiki-label-lock',
+					'default' => $this->requestInterwikiRequestManager->isLocked(),
 					'section' => 'handling',
 				],
 			];
@@ -312,30 +312,30 @@ class ImportDumpRequestViewer {
 				$formDescriptor += [
 					'handle-private' => [
 						'type' => 'check',
-						'label-message' => 'importdump-label-private',
-						'default' => $this->importDumpRequestManager->isPrivate(),
-						'disabled' => $this->importDumpRequestManager->isPrivate( true ),
+						'label-message' => 'requestinterwiki-label-private',
+						'default' => $this->requestInterwikiRequestManager->isPrivate(),
+						'disabled' => $this->requestInterwikiRequestManager->isPrivate( true ),
 						'section' => 'handling',
 					],
 				];
 			}
 
 			if (
-				!$this->importDumpRequestManager->getInterwikiPrefix() &&
+				!$this->requestInterwikiRequestManager->getInterwikiPrefix() &&
 				$this->permissionManager->userHasRight( $user, 'handle-import-dump-interwiki' )
 			) {
-				$source = $this->importDumpRequestManager->getSource();
-				$target = $this->importDumpRequestManager->getTarget();
+				$source = $this->requestInterwikiRequestManager->getSource();
+				$target = $this->requestInterwikiRequestManager->getTarget();
 
 				$formDescriptor += [
 					'handle-interwiki-info' => [
 						'type' => 'info',
-						'default' => $this->context->msg( 'importdump-info-interwiki', $target )->text(),
+						'default' => $this->context->msg( 'requestinterwiki-info-interwiki', $target )->text(),
 						'section' => 'handling',
 					],
 					'handle-interwiki-prefix' => [
 						'type' => 'text',
-						'label-message' => 'importdump-label-interwiki-prefix',
+						'label-message' => 'requestinterwiki-label-interwiki-prefix',
 						'default' => '',
 						'validation-callback' => [ $this, 'isValidInterwikiPrefix' ],
 						'section' => 'handling',
@@ -343,7 +343,7 @@ class ImportDumpRequestViewer {
 					'handle-interwiki-url' => [
 						'type' => 'url',
 						'label-message' => [
-							'importdump-label-interwiki-url',
+							'requestinterwiki-label-interwiki-url',
 							( parse_url( $source, PHP_URL_SCHEME ) ?: 'https' ) . '://' .
 							( parse_url( $source, PHP_URL_HOST ) ?: 'www.example.com' ) .
 							'/wiki/$1',
@@ -363,22 +363,22 @@ class ImportDumpRequestViewer {
 			$formDescriptor += [
 				'handle-status' => [
 					'type' => 'select',
-					'label-message' => 'importdump-label-update-status',
+					'label-message' => 'requestinterwiki-label-update-status',
 					'options-messages' => [
-						'importdump-label-pending' => 'pending',
-						'importdump-label-inprogress' => 'inprogress',
-						'importdump-label-complete' => 'complete',
-						'importdump-label-declined' => 'declined',
+						'requestinterwiki-label-pending' => 'pending',
+						'requestinterwiki-label-inprogress' => 'inprogress',
+						'requestinterwiki-label-complete' => 'complete',
+						'requestinterwiki-label-declined' => 'declined',
 					],
 					'default' => $status,
 					'disabled' => !$validRequest,
-					'cssclass' => 'importdump-infuse',
+					'cssclass' => 'requestinterwiki-infuse',
 					'section' => 'handling',
 				],
 				'handle-comment' => [
 					'type' => 'textarea',
 					'rows' => 4,
-					'label-message' => 'importdump-label-status-updated-comment',
+					'label-message' => 'requestinterwiki-label-status-updated-comment',
 					'section' => 'handling',
 				],
 				'submit-handle' => [
@@ -411,7 +411,7 @@ class ImportDumpRequestViewer {
 	 */
 	public function isValidDatabase( ?string $target ) {
 		if ( !in_array( $target, $this->config->get( 'LocalDatabases' ) ) ) {
-			return Status::newFatal( 'importdump-invalid-target' )->getMessage();
+			return Status::newFatal( 'requestinterwiki-invalid-target' )->getMessage();
 		}
 
 		return true;
@@ -460,7 +460,7 @@ class ImportDumpRequestViewer {
 			!parse_url( $url, PHP_URL_SCHEME ) ||
 			!parse_url( $url, PHP_URL_HOST )
 		) {
-			return Status::newFatal( 'importdump-invalid-interwiki-url' )->getMessage();
+			return Status::newFatal( 'requestinterwiki-invalid-interwiki-url' )->getMessage();
 		}
 
 		return true;
@@ -468,28 +468,28 @@ class ImportDumpRequestViewer {
 
 	/**
 	 * @param int $requestID
-	 * @return ?ImportDumpOOUIForm
+	 * @return ?RequestInterwikiOOUIForm
 	 */
-	public function getForm( int $requestID ): ?ImportDumpOOUIForm {
-		$this->importDumpRequestManager->fromID( $requestID );
+	public function getForm( int $requestID ): ?RequestInterwikiOOUIForm {
+		$this->requestInterwikiRequestManager->fromID( $requestID );
 		$out = $this->context->getOutput();
 
-		if ( $requestID === 0 || !$this->importDumpRequestManager->exists() ) {
+		if ( $requestID === 0 || !$this->requestInterwikiRequestManager->exists() ) {
 			$out->addHTML(
-				Html::errorBox( $this->context->msg( 'importdump-unknown' )->escaped() )
+				Html::errorBox( $this->context->msg( 'requestinterwiki-unknown' )->escaped() )
 			);
 
 			return null;
 		}
 
-		$out->addModules( [ 'ext.importdump.oouiform' ] );
-		$out->addModuleStyles( [ 'ext.importdump.oouiform.styles' ] );
+		$out->addModules( [ 'ext.requestinterwiki.oouiform' ] );
+		$out->addModuleStyles( [ 'ext.requestinterwiki.oouiform.styles' ] );
 		$out->addModuleStyles( [ 'oojs-ui-widgets.styles' ] );
 
 		$formDescriptor = $this->getFormDescriptor();
-		$htmlForm = new ImportDumpOOUIForm( $formDescriptor, $this->context, 'importdump-section' );
+		$htmlForm = new RequestInterwikiOOUIForm( $formDescriptor, $this->context, 'requestinterwiki-section' );
 
-		$htmlForm->setId( 'importdump-request-viewer' );
+		$htmlForm->setId( 'requestinterwiki-request-viewer' );
 		$htmlForm->suppressDefaultSubmit();
 		$htmlForm->setSubmitCallback(
 			function ( array $formData, HTMLForm $form ) {
@@ -516,90 +516,90 @@ class ImportDumpRequestViewer {
 		$out = $form->getContext()->getOutput();
 
 		if ( isset( $formData['submit-comment'] ) ) {
-			$this->importDumpRequestManager->addComment( $formData['comment'], $user );
-			$out->addHTML( Html::successBox( $this->context->msg( 'importdump-comment-success' )->escaped() ) );
+			$this->requestInterwikiRequestManager->addComment( $formData['comment'], $user );
+			$out->addHTML( Html::successBox( $this->context->msg( 'requestinterwiki-comment-success' )->escaped() ) );
 
 			return;
 		}
 
 		if ( isset( $formData['submit-edit'] ) ) {
-			$this->importDumpRequestManager->startAtomic( __METHOD__ );
+			$this->requestInterwikiRequestManager->startAtomic( __METHOD__ );
 
 			$changes = [];
-			if ( $this->importDumpRequestManager->getReason() !== $formData['edit-reason'] ) {
-				$changes[] = $this->context->msg( 'importdump-request-edited-reason' )->plaintextParams(
-					$this->importDumpRequestManager->getReason(),
+			if ( $this->requestInterwikiRequestManager->getReason() !== $formData['edit-reason'] ) {
+				$changes[] = $this->context->msg( 'requestinterwiki-request-edited-reason' )->plaintextParams(
+					$this->requestInterwikiRequestManager->getReason(),
 					$formData['edit-reason']
 				)->escaped();
 
-				$this->importDumpRequestManager->setReason( $formData['edit-reason'] );
+				$this->requestInterwikiRequestManager->setReason( $formData['edit-reason'] );
 			}
 
-			if ( $this->importDumpRequestManager->getSource() !== $formData['edit-source'] ) {
-				$changes[] = $this->context->msg( 'importdump-request-edited-source' )->plaintextParams(
-					$this->importDumpRequestManager->getSource(),
+			if ( $this->requestInterwikiRequestManager->getSource() !== $formData['edit-source'] ) {
+				$changes[] = $this->context->msg( 'requestinterwiki-request-edited-source' )->plaintextParams(
+					$this->requestInterwikiRequestManager->getSource(),
 					$formData['edit-source']
 				)->escaped();
 
-				$this->importDumpRequestManager->setSource( $formData['edit-source'] );
+				$this->requestInterwikiRequestManager->setSource( $formData['edit-source'] );
 			}
 
-			if ( $this->importDumpRequestManager->getTarget() !== $formData['edit-target'] ) {
+			if ( $this->requestInterwikiRequestManager->getTarget() !== $formData['edit-target'] ) {
 				$changes[] = $this->context->msg(
-					'importdump-request-edited-target',
-					$this->importDumpRequestManager->getTarget(),
+					'requestinterwiki-request-edited-target',
+					$this->requestInterwikiRequestManager->getTarget(),
 					$formData['edit-target']
 				)->escaped();
 
-				$this->importDumpRequestManager->setTarget( $formData['edit-target'] );
+				$this->requestInterwikiRequestManager->setTarget( $formData['edit-target'] );
 			}
 
 			if ( !$changes ) {
-				$this->importDumpRequestManager->endAtomic( __METHOD__ );
+				$this->requestInterwikiRequestManager->endAtomic( __METHOD__ );
 
-				$out->addHTML( Html::errorBox( $this->context->msg( 'importdump-no-changes' )->escaped() ) );
+				$out->addHTML( Html::errorBox( $this->context->msg( 'requestinterwiki-no-changes' )->escaped() ) );
 
 				return;
 			}
 
-			if ( $this->importDumpRequestManager->getStatus() === 'declined' ) {
-				$this->importDumpRequestManager->setStatus( 'pending' );
+			if ( $this->requestInterwikiRequestManager->getStatus() === 'declined' ) {
+				$this->requestInterwikiRequestManager->setStatus( 'pending' );
 
-				$comment = $this->context->msg( 'importdump-request-reopened', $user->getName() )->rawParams(
+				$comment = $this->context->msg( 'requestinterwiki-request-reopened', $user->getName() )->rawParams(
 					implode( "\n", $changes )
 				)->inContentLanguage()->escaped();
 
-				$this->importDumpRequestManager->logStatusUpdate( $comment, 'pending', $user );
+				$this->requestInterwikiRequestManager->logStatusUpdate( $comment, 'pending', $user );
 
-				$this->importDumpRequestManager->addComment( $comment, User::newSystemUser( 'ImportDump Extension' ) );
+				$this->requestInterwikiRequestManager->addComment( $comment, User::newSystemUser( 'RequestInterwiki Extension' ) );
 
-				$this->importDumpRequestManager->sendNotification(
-					$comment, 'importdump-request-status-update', $user
+				$this->requestInterwikiRequestManager->sendNotification(
+					$comment, 'requestinterwiki-request-status-update', $user
 				);
 			} else {
-				$comment = $this->context->msg( 'importdump-request-edited', $user->getName() )->rawParams(
+				$comment = $this->context->msg( 'requestinterwiki-request-edited', $user->getName() )->rawParams(
 					implode( "\n", $changes )
 				)->inContentLanguage()->escaped();
 
-				$this->importDumpRequestManager->addComment( $comment, User::newSystemUser( 'ImportDump Extension' ) );
+				$this->requestInterwikiRequestManager->addComment( $comment, User::newSystemUser( 'RequestInterwiki Extension' ) );
 			}
 
-			$this->importDumpRequestManager->endAtomic( __METHOD__ );
+			$this->requestInterwikiRequestManager->endAtomic( __METHOD__ );
 
-			$out->addHTML( Html::successBox( $this->context->msg( 'importdump-edit-success' )->escaped() ) );
+			$out->addHTML( Html::successBox( $this->context->msg( 'requestinterwiki-edit-success' )->escaped() ) );
 
 			return;
 		}
 
 		if ( isset( $formData['submit-interwiki'] ) ) {
-			if ( $this->importDumpRequestManager->insertInterwikiPrefix(
+			if ( $this->requestInterwikiRequestManager->insertInterwikiPrefix(
 				$formData['handle-interwiki-prefix'],
 				$formData['handle-interwiki-url'],
 				$user
 			) ) {
 				$out->addHTML( Html::successBox(
-					$this->context->msg( 'importdump-interwiki-success',
-						$this->importDumpRequestManager->getTarget()
+					$this->context->msg( 'requestinterwiki-interwiki-success',
+						$this->requestInterwikiRequestManager->getTarget()
 					)->escaped() )
 				);
 
@@ -607,8 +607,8 @@ class ImportDumpRequestViewer {
 			}
 
 			$out->addHTML( Html::errorBox(
-				$this->context->msg( 'importdump-interwiki-failed',
-					$this->importDumpRequestManager->getTarget()
+				$this->context->msg( 'requestinterwiki-interwiki-failed',
+					$this->requestInterwikiRequestManager->getTarget()
 				)->escaped() )
 			);
 
@@ -616,91 +616,91 @@ class ImportDumpRequestViewer {
 		}
 
 		if ( isset( $formData['submit-handle'] ) ) {
-			$this->importDumpRequestManager->startAtomic( __METHOD__ );
+			$this->requestInterwikiRequestManager->startAtomic( __METHOD__ );
 			$changes = [];
 
-			if ( $this->importDumpRequestManager->isLocked() !== (bool)$formData['handle-lock'] ) {
-				$changes[] = $this->importDumpRequestManager->isLocked() ?
+			if ( $this->requestInterwikiRequestManager->isLocked() !== (bool)$formData['handle-lock'] ) {
+				$changes[] = $this->requestInterwikiRequestManager->isLocked() ?
 					'unlocked' : 'locked';
 
-				$this->importDumpRequestManager->setLocked( (int)$formData['handle-lock'] );
+				$this->requestInterwikiRequestManager->setLocked( (int)$formData['handle-lock'] );
 			}
 
 			if (
 				isset( $formData['handle-private'] ) &&
-				$this->importDumpRequestManager->isPrivate() !== (bool)$formData['handle-private']
+				$this->requestInterwikiRequestManager->isPrivate() !== (bool)$formData['handle-private']
 			) {
-				$changes[] = $this->importDumpRequestManager->isPrivate() ?
+				$changes[] = $this->requestInterwikiRequestManager->isPrivate() ?
 					'public' : 'private';
 
-				$this->importDumpRequestManager->setPrivate( (int)$formData['handle-private'] );
+				$this->requestInterwikiRequestManager->setPrivate( (int)$formData['handle-private'] );
 			}
 
-			if ( $this->importDumpRequestManager->getStatus() === $formData['handle-status'] ) {
-				$this->importDumpRequestManager->endAtomic( __METHOD__ );
+			if ( $this->requestInterwikiRequestManager->getStatus() === $formData['handle-status'] ) {
+				$this->requestInterwikiRequestManager->endAtomic( __METHOD__ );
 
 				if ( !$changes ) {
-					$out->addHTML( Html::errorBox( $this->context->msg( 'importdump-no-changes' )->escaped() ) );
+					$out->addHTML( Html::errorBox( $this->context->msg( 'requestinterwiki-no-changes' )->escaped() ) );
 					return;
 				}
 
 				if ( in_array( 'private', $changes ) ) {
 					$out->addHTML(
-						Html::successBox( $this->context->msg( 'importdump-success-private' )->escaped() )
+						Html::successBox( $this->context->msg( 'requestinterwiki-success-private' )->escaped() )
 					);
 				}
 
 				if ( in_array( 'public', $changes ) ) {
 					$out->addHTML(
-						Html::successBox( $this->context->msg( 'importdump-success-public' )->escaped() )
+						Html::successBox( $this->context->msg( 'requestinterwiki-success-public' )->escaped() )
 					);
 				}
 
 				if ( in_array( 'locked', $changes ) ) {
 					$out->addHTML(
-						Html::successBox( $this->context->msg( 'importdump-success-locked' )->escaped() )
+						Html::successBox( $this->context->msg( 'requestinterwiki-success-locked' )->escaped() )
 					);
 				}
 
 				if ( in_array( 'unlocked', $changes ) ) {
 					$out->addHTML(
-						Html::successBox( $this->context->msg( 'importdump-success-unlocked' )->escaped() )
+						Html::successBox( $this->context->msg( 'requestinterwiki-success-unlocked' )->escaped() )
 					);
 				}
 
 				return;
 			}
 
-			$this->importDumpRequestManager->setStatus( $formData['handle-status'] );
+			$this->requestInterwikiRequestManager->setStatus( $formData['handle-status'] );
 
-			$statusMessage = $this->context->msg( 'importdump-label-' . $formData['handle-status'] )
+			$statusMessage = $this->context->msg( 'requestinterwiki-label-' . $formData['handle-status'] )
 				->inContentLanguage()
 				->text();
 
-			$comment = $this->context->msg( 'importdump-status-updated', strtolower( $statusMessage ) )
+			$comment = $this->context->msg( 'requestinterwiki-status-updated', strtolower( $statusMessage ) )
 				->inContentLanguage()
 				->escaped();
 
 			if ( $formData['handle-comment'] ) {
-				$commentUser = User::newSystemUser( 'ImportDump Status Update' );
+				$commentUser = User::newSystemUser( 'RequestInterwiki Status Update' );
 
-				$comment .= "\n" . $this->context->msg( 'importdump-comment-given', $user->getName() )
+				$comment .= "\n" . $this->context->msg( 'requestinterwiki-comment-given', $user->getName() )
 					->inContentLanguage()
 					->escaped();
 
 				$comment .= ' ' . $formData['handle-comment'];
 			}
 
-			$this->importDumpRequestManager->addComment( $comment, $commentUser ?? $user );
-			$this->importDumpRequestManager->logStatusUpdate(
+			$this->requestInterwikiRequestManager->addComment( $comment, $commentUser ?? $user );
+			$this->requestInterwikiRequestManager->logStatusUpdate(
 				$formData['handle-comment'], $formData['handle-status'], $user
 			);
 
-			$this->importDumpRequestManager->sendNotification( $comment, 'importdump-request-status-update', $user );
+			$this->requestInterwikiRequestManager->sendNotification( $comment, 'requestinterwiki-request-status-update', $user );
 
-			$this->importDumpRequestManager->endAtomic( __METHOD__ );
+			$this->requestInterwikiRequestManager->endAtomic( __METHOD__ );
 
-			$out->addHTML( Html::successBox( $this->context->msg( 'importdump-status-updated-success' )->escaped() ) );
+			$out->addHTML( Html::successBox( $this->context->msg( 'requestinterwiki-status-updated-success' )->escaped() ) );
 		}
 	}
 }

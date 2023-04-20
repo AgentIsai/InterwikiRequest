@@ -1,27 +1,27 @@
 {
-	"name": "ImportDump",
+	"name": "RequestInterwiki",
 	"author": "Universal Omega",
-	"url": "https://github.com/miraheze/ImportDump",
-	"descriptionmsg": "importdump-desc",
-	"namemsg": "importdump-extensionname",
+	"url": "https://github.com/miraheze/RequestInterwiki",
+	"descriptionmsg": "requestinterwiki-desc",
+	"namemsg": "requestinterwiki-extensionname",
 	"license-name": "GPL-3.0-or-later",
 	"type": "specialpage",
 	"requires": {
 		"MediaWiki": ">= 1.39.0"
 	},
 	"MessagesDirs": {
-		"ImportDump": [
+		"RequestInterwiki": [
 			"i18n"
 		]
 	},
 	"ExtensionMessagesFiles": {
-		"ImportDumpAliases": "ImportDumpAliases.php"
+		"RequestInterwikiAliases": "RequestInterwikiAliases.php"
 	},
 	"AutoloadNamespaces": {
-		"Miraheze\\ImportDump\\": "includes/"
+		"Miraheze\\RequestInterwiki\\": "includes/"
 	},
 	"TestAutoloadNamespaces": {
-		"Miraheze\\ImportDump\\Tests\\": "tests/phpunit/"
+		"Miraheze\\RequestInterwiki\\Tests\\": "tests/phpunit/"
 	},
 	"GroupPermissions": {
 		"user": {
@@ -35,26 +35,26 @@
 		"view-private-import-dump-requests"
 	],
 	"LogActionsHandlers": {
-		"importdump/*": "LogFormatter",
-		"importdumpprivate/*": "LogFormatter"
+		"requestinterwiki/*": "LogFormatter",
+		"requestinterwikiprivate/*": "LogFormatter"
 	},
 	"LogHeaders": {
-		"importdump": "importdump-log-header",
-		"importdumpprivate": "importdumpprivate-log-header"
+		"requestinterwiki": "requestinterwiki-log-header",
+		"requestinterwikiprivate": "requestinterwikiprivate-log-header"
 	},
 	"LogNames": {
-		"importdump": "importdump-log-name",
-		"importdumpprivate": "importdumpprivate-log-name"
+		"requestinterwiki": "requestinterwiki-log-name",
+		"requestinterwikiprivate": "requestinterwikiprivate-log-name"
 	},
 	"LogTypes": [
-		"importdump",
-		"importdumpprivate"
+		"requestinterwiki",
+		"requestinterwikiprivate"
 	],
 	"LogRestrictions": {
-		"importdumpprivate": "view-private-import-dump-requests"
+		"requestinterwikiprivate": "view-private-import-dump-requests"
 	},
 	"ActionFilteredLogs": {
-		"importdump": {
+		"requestinterwiki": {
 			"interwiki": [
 				"interwiki"
 			],
@@ -65,7 +65,7 @@
 				"statusupdate"
 			]
 		},
-		"importdumpprivate": {
+		"requestinterwikiprivate": {
 			"interwiki": [
 				"interwiki"
 			],
@@ -78,8 +78,8 @@
 		}
 	},
 	"SpecialPages": {
-		"RequestImportDump": {
-			"class": "Miraheze\\ImportDump\\Specials\\SpecialRequestImportDump",
+		"RequestInterwiki": {
+			"class": "Miraheze\\RequestInterwiki\\Specials\\SpecialRequestInterwiki",
 			"services": [
 				"DBLoadBalancerFactory",
 				"MimeAnalyzer",
@@ -87,11 +87,11 @@
 				"UserFactory"
 			]
 		},
-		"RequestImportDumpQueue": {
-			"class": "Miraheze\\ImportDump\\Specials\\SpecialRequestImportDumpQueue",
+		"RequestInterwikiQueue": {
+			"class": "Miraheze\\RequestInterwiki\\Specials\\SpecialRequestInterwikiQueue",
 			"services": [
 				"DBLoadBalancerFactory",
-				"ImportDumpRequestManager",
+				"RequestInterwikiRequestManager",
 				"PermissionManager",
 				"UserFactory"
 			]
@@ -113,69 +113,69 @@
 	},
 	"HookHandlers": {
 		"Installer": {
-			"class": "Miraheze\\ImportDump\\Hooks\\Handlers\\Installer"
+			"class": "Miraheze\\RequestInterwiki\\Hooks\\Handlers\\Installer"
 		},
 		"Main": {
-			"class": "Miraheze\\ImportDump\\Hooks\\Handlers\\Main",
+			"class": "Miraheze\\RequestInterwiki\\Hooks\\Handlers\\Main",
 			"services": [
 				"ConfigFactory"
 			]
 		}
 	},
 	"ResourceModules": {
-		"ext.importdump.oouiform": {
+		"ext.requestinterwiki.oouiform": {
 			"targets": [ "desktop", "mobile" ],
-			"scripts": "ext.importdump.oouiform.ooui.js",
+			"scripts": "ext.requestinterwiki.oouiform.ooui.js",
 			"dependencies": [
 				"mediawiki.storage",
 				"oojs-ui-widgets"
 			]
 		},
-		"ext.importdump.oouiform.styles": {
+		"ext.requestinterwiki.oouiform.styles": {
 			"targets": [ "desktop", "mobile" ],
-			"styles": "ext.importdump.oouiform.ooui.less"
+			"styles": "ext.requestinterwiki.oouiform.ooui.less"
 		}
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "modules",
-		"remoteExtPath": "ImportDump/modules"
+		"remoteExtPath": "RequestInterwiki/modules"
 	},
 	"config": {
-		"ImportDumpCentralWiki": {
+		"RequestInterwikiCentralWiki": {
 			"value": "",
 			"description": "If set, only allow users to request import dumps on this wiki."
 		},
-		"ImportDumpHelpUrl": {
+		"RequestInterwikiHelpUrl": {
 			"value": "",
-			"description": "Full URL. If set, adds a help URL to Special:RequestImportDump."
+			"description": "Full URL. If set, adds a help URL to Special:RequestInterwiki."
 		},
-		"ImportDumpInterwikiMap": {
+		"RequestInterwikiInterwikiMap": {
 			"value": [],
 			"description": "A mapping of 'domain => interwiki prefix' for multi-level interwiki prefix generation for --username-prefix."
 		},
-		"ImportDumpScriptCommand": {
-			"value": "php {IP}/maintenance/importDump.php --wiki={wiki} --username-prefix=\"{username-prefix}\" {file}",
+		"RequestInterwikiScriptCommand": {
+			"value": "php {IP}/maintenance/requestInterwiki.php --wiki={wiki} --username-prefix=\"{username-prefix}\" {file}",
 			"description": "Generated maintenance script command to use."
 		},
-		"ImportDumpUsersNotifiedOnAllRequests": {
+		"RequestInterwikiUsersNotifiedOnAllRequests": {
 			"value": [],
 			"description": "Array of usernames to send email notifications to for all requests. Users listed here must have a verified email address on their account. This doesn't do anything if the Echo extension is not installed."
 		}
 	},
 	"ConfigRegistry": {
-		"ImportDump": "GlobalVarConfig::newInstance"
+		"RequestInterwiki": "GlobalVarConfig::newInstance"
 	},
 	"DefaultUserOptions": {
-		"echo-subscriptions-email-importdump-new-request": true,
-		"echo-subscriptions-email-importdump-request-comment": true,
-		"echo-subscriptions-email-importdump-request-status-update": true,
-		"echo-subscriptions-web-importdump-new-request": false,
-		"echo-subscriptions-web-importdump-request-comment": true,
-		"echo-subscriptions-web-importdump-request-status-update": true
+		"echo-subscriptions-email-requestinterwiki-new-request": true,
+		"echo-subscriptions-email-requestinterwiki-request-comment": true,
+		"echo-subscriptions-email-requestinterwiki-request-status-update": true,
+		"echo-subscriptions-web-requestinterwiki-new-request": false,
+		"echo-subscriptions-web-requestinterwiki-request-comment": true,
+		"echo-subscriptions-web-requestinterwiki-request-status-update": true
 	},
 	"HiddenPrefs": [
-		"echo-subscriptions-email-importdump-new-request",
-		"echo-subscriptions-web-importdump-new-request"
+		"echo-subscriptions-email-requestinterwiki-new-request",
+		"echo-subscriptions-web-requestinterwiki-new-request"
 	],
 	"RateLimits": {
 		"request-import-dump": {

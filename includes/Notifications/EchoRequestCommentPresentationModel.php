@@ -1,6 +1,6 @@
 <?php
 
-namespace Miraheze\ImportDump\Notifications;
+namespace Miraheze\RequestInterwiki\Notifications;
 
 use EchoDiscussionParser;
 use EchoEventPresentationModel;
@@ -21,7 +21,7 @@ class EchoRequestCommentPresentationModel extends EchoEventPresentationModel {
 	 */
 	public function getHeaderMessage() {
 		return $this->msg(
-			'importdump-notification-header-comment',
+			'requestinterwiki-notification-header-comment',
 			$this->event->getExtraParam( 'request-id' )
 		);
 	}
@@ -49,7 +49,7 @@ class EchoRequestCommentPresentationModel extends EchoEventPresentationModel {
 	public function getSecondaryLinks() {
 		$visitLink = [
 			'url' => $this->event->getExtraParam( 'request-url', 0 ),
-			'label' => $this->msg( 'importdump-notification-visit-request' )->text(),
+			'label' => $this->msg( 'requestinterwiki-notification-visit-request' )->text(),
 			'prioritized' => true,
 		];
 

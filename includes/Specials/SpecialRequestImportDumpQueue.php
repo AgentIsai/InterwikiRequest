@@ -1,23 +1,23 @@
 <?php
 
-namespace Miraheze\ImportDump\Specials;
+namespace Miraheze\RequestInterwiki\Specials;
 
 use HTMLForm;
 use MediaWiki\Permissions\PermissionManager;
 use MediaWiki\User\UserFactory;
-use Miraheze\ImportDump\ImportDumpRequestManager;
-use Miraheze\ImportDump\ImportDumpRequestQueuePager;
-use Miraheze\ImportDump\ImportDumpRequestViewer;
+use Miraheze\RequestInterwiki\RequestInterwikiRequestManager;
+use Miraheze\RequestInterwiki\RequestInterwikiRequestQueuePager;
+use Miraheze\RequestInterwiki\RequestInterwikiRequestViewer;
 use SpecialPage;
 use Wikimedia\Rdbms\ILBFactory;
 
-class SpecialRequestImportDumpQueue extends SpecialPage {
+class SpecialRequestInterwikiQueue extends SpecialPage {
 
 	/** @var ILBFactory */
 	private $dbLoadBalancerFactory;
 
-	/** @var ImportDumpRequestManager */
-	private $importDumpRequestManager;
+	/** @var RequestInterwikiRequestManager */
+	private $requestInterwikiRequestManager;
 
 	/** @var PermissionManager */
 	private $permissionManager;
@@ -27,20 +27,20 @@ class SpecialRequestImportDumpQueue extends SpecialPage {
 
 	/**
 	 * @param ILBFactory $dbLoadBalancerFactory
-	 * @param ImportDumpRequestManager $importDumpRequestManager
+	 * @param RequestInterwikiRequestManager $requestInterwikiRequestManager
 	 * @param PermissionManager $permissionManager
 	 * @param UserFactory $userFactory
 	 */
 	public function __construct(
 		ILBFactory $dbLoadBalancerFactory,
-		ImportDumpRequestManager $importDumpRequestManager,
+		RequestInterwikiRequestManager $requestInterwikiRequestManager,
 		PermissionManager $permissionManager,
 		UserFactory $userFactory
 	) {
-		parent::__construct( 'RequestImportDumpQueue' );
+		parent::__construct( 'RequestInterwikiQueue' );
 
 		$this->dbLoadBalancerFactory = $dbLoadBalancerFactory;
-		$this->importDumpRequestManager = $importDumpRequestManager;
+		$this->requestInterwikiRequestManager = $requestInterwikiRequestManager;
 		$this->permissionManager = $permissionManager;
 		$this->userFactory = $userFactory;
 	}
@@ -68,26 +68,26 @@ class SpecialRequestImportDumpQueue extends SpecialPage {
 			'target' => [
 				'type' => 'text',
 				'name' => 'target',
-				'label-message' => 'importdump-label-target',
+				'label-message' => 'requestinterwiki-label-target',
 				'default' => $target,
 			],
 			'requester' => [
 				'type' => 'user',
 				'name' => 'requester',
-				'label-message' => 'importdump-label-requester',
+				'label-message' => 'requestinterwiki-label-requester',
 				'exist' => true,
 				'default' => $requester,
 			],
 			'status' => [
 				'type' => 'select',
 				'name' => 'status',
-				'label-message' => 'importdump-label-status',
+				'label-message' => 'requestinterwiki-label-status',
 				'options-messages' => [
-					'importdump-label-pending' => 'pending',
-					'importdump-label-inprogress' => 'inprogress',
-					'importdump-label-complete' => 'complete',
-					'importdump-label-declined' => 'declined',
-					'importdump-label-all' => '*',
+					'requestinterwiki-label-pending' => 'pending',
+					'requestinterwiki-label-inprogress' => 'inprogress',
+					'requestinterwiki-label-complete' => 'complete',
+					'requestinterwiki-label-declined' => 'declined',
+					'requestinterwiki-label-all' => '*',
 				],
 				'default' => $status ?: 'pending',
 			],
@@ -96,7 +96,7 @@ class SpecialRequestImportDumpQueue extends SpecialPage {
 		$htmlForm = HTMLForm::factory( 'ooui', $formDescriptor, $this->getContext() );
 		$htmlForm->setMethod( 'get' )->prepareForm()->displayForm( false );
 
-		$pager = new ImportDumpRequestQueuePager(
+		$pager = new RequestInterwikiRequestQueuePager(
 			$this->getConfig(),
 			$this->getContext(),
 			$this->dbLoadBalancerFactory,
@@ -116,10 +116,10 @@ class SpecialRequestImportDumpQueue extends SpecialPage {
 	 * @param string $par
 	 */
 	private function lookupRequest( $par ) {
-		$requestViewer = new ImportDumpRequestViewer(
+		$requestViewer = new RequestInterwikiRequestViewer(
 			$this->getConfig(),
 			$this->getContext(),
-			$this->importDumpRequestManager,
+			$this->requestInterwikiRequestManager,
 			$this->permissionManager
 		);
 

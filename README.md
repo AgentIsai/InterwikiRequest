@@ -1,4 +1,4 @@
-# ImportDump
+# RequestInterwiki
 An extension designed to automate user import requests.
 
 Developed by Universal Omega.

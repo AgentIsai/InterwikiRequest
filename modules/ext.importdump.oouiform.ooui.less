@@ -1,4 +1,4 @@
-#importdump {
+#requestinterwiki {
 	filter: brightness( 1 );
 
 	.mw-message-box-notice {
@@ -17,8 +17,8 @@
 	}
 }
 
-.importdump-tabs {
-	.importdump-fieldset-wrapper {
+.requestinterwiki-tabs {
+	.requestinterwiki-fieldset-wrapper {
 		padding-right: 0;
 		padding-left: 0;
 
@@ -32,8 +32,8 @@
 	}
 }
 
-.importdump-tabs-wrapper.oo-ui-panelLayout-framed,
-.importdump-tabs > .oo-ui-menuLayout-content > .oo-ui-indexLayout-stackLayout > .oo-ui-tabPanelLayout {
+.requestinterwiki-tabs-wrapper.oo-ui-panelLayout-framed,
+.requestinterwiki-tabs > .oo-ui-menuLayout-content > .oo-ui-indexLayout-stackLayout > .oo-ui-tabPanelLayout {
 	/* Decrease contrast of `border` slightly as padding/border combination is sufficient
 	 * accessibility wise and focus of content is more important here. */
 	border-color: #c8ccd1;
@@ -42,18 +42,18 @@
 /* JavaScript disabled */
 .client-nojs {
 	// Disable .oo-ui-panelLayout-framed on outer wrapper
-	.importdump-tabs-wrapper {
+	.requestinterwiki-tabs-wrapper {
 		border-width: 0;
 		border-radius: 0;
 	}
 
-	.importdump-tabs {
+	.requestinterwiki-tabs {
 		// Hide the tab menu when JS is disabled as we can't use this feature
 		> .oo-ui-menuLayout-menu {
 			display: none;
 		}
 
-		.importdump-section-fieldset {
+		.requestinterwiki-section-fieldset {
 			// <legend> is hard to style, so apply border to top of group
 			> .oo-ui-fieldsetLayout-group {
 				padding-top: 1.5em;
@@ -74,7 +74,7 @@
 }
 
 /* JavaScript enabled */
-.client-js .importdump-tabs {
+.client-js .requestinterwiki-tabs {
 	.oo-ui-tabPanelLayout {
 		// Panels don't need borders as the IndexLayout is inside a framed wrapper.
 		border: 0;
@@ -86,7 +86,7 @@
 	}
 
 	// Hide all but the first panel before infusion
-	&:not( .importdump-tabs-infused ) {
+	&:not( .requestinterwiki-tabs-infused ) {
 		.oo-ui-tabPanelLayout:not( :first-child ) {
 			display: none;
 		}

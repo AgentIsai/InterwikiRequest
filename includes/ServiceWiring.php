@@ -2,20 +2,20 @@
 
 use MediaWiki\Config\ServiceOptions;
 use MediaWiki\MediaWikiServices;
-use Miraheze\ImportDump\ImportDumpRequestManager;
+use Miraheze\RequestInterwiki\RequestInterwikiRequestManager;
 
 return [
-	'ImportDumpRequestManager' => static function ( MediaWikiServices $services ): ImportDumpRequestManager {
-		return new ImportDumpRequestManager(
-			$services->getConfigFactory()->makeConfig( 'ImportDump' ),
+	'RequestInterwikiRequestManager' => static function ( MediaWikiServices $services ): RequestInterwikiRequestManager {
+		return new RequestInterwikiRequestManager(
+			$services->getConfigFactory()->makeConfig( 'RequestInterwiki' ),
 			$services->getDBLoadBalancerFactory(),
 			$services->getInterwikiLookup(),
 			$services->getLinkRenderer(),
 			$services->getRepoGroup(),
 			RequestContext::getMain(),
 			new ServiceOptions(
-				ImportDumpRequestManager::CONSTRUCTOR_OPTIONS,
-				$services->getConfigFactory()->makeConfig( 'ImportDump' )
+				RequestInterwikiRequestManager::CONSTRUCTOR_OPTIONS,
+				$services->getConfigFactory()->makeConfig( 'RequestInterwiki' )
 			),
 			$services->getUserFactory(),
 			$services->getUserGroupManagerFactory()

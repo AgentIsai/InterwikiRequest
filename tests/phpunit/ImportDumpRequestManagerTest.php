@@ -1,33 +1,33 @@
 <?php
 
-namespace Miraheze\ImportDump\Tests;
+namespace Miraheze\RequestInterwiki\Tests;
 
 use MediaWikiIntegrationTestCase;
-use Miraheze\ImportDump\ImportDumpRequestManager;
+use Miraheze\RequestInterwiki\RequestInterwikiRequestManager;
 use ReflectionClass;
 use Wikimedia\Timestamp\ConvertibleTimestamp;
 
 /**
- * @group ImportDump
+ * @group RequestInterwiki
  * @group Database
  * @group Medium
- * @coversDefaultClass \Miraheze\ImportDump\ImportDumpRequestManager
+ * @coversDefaultClass \Miraheze\RequestInterwiki\RequestInterwikiRequestManager
  */
-class ImportDumpRequestManagerTest extends MediaWikiIntegrationTestCase {
+class RequestInterwikiRequestManagerTest extends MediaWikiIntegrationTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->tablesUsed[] = 'importdump_requests';
+		$this->tablesUsed[] = 'requestinterwiki_requests';
 	}
 
 	public function addDBData() {
 		ConvertibleTimestamp::setFakeTime( ConvertibleTimestamp::now() );
 
 		$this->db->insert(
-			'importdump_requests',
+			'requestinterwiki_requests',
 			[
-				'request_source' => 'https://importdumptest.com',
-				'request_target' => 'importdumptest',
+				'request_source' => 'https://requestinterwikitest.com',
+				'request_target' => 'requestinterwikitest',
 				'request_reason' => 'test',
 				'request_status' => 'pending',
 				'request_actor' => $this->getTestUser()->getUser()->getActorId(),
@@ -38,9 +38,9 @@ class ImportDumpRequestManagerTest extends MediaWikiIntegrationTestCase {
 		);
 	}
 
-	private function getImportDumpRequestManager(): ImportDumpRequestManager {
+	private function getRequestInterwikiRequestManager(): RequestInterwikiRequestManager {
 		$services = $this->getServiceContainer();
-		$manager = $services->getService( 'ImportDumpRequestManager' );
+		$manager = $services->getService( 'RequestInterwikiRequestManager' );
 
 		$manager->fromID( 1 );
 
@@ -52,7 +52,7 @@ class ImportDumpRequestManagerTest extends MediaWikiIntegrationTestCase {
 	 * @covers ::fromID
 	 */
 	public function testFromID() {
-		$manager = $this->getImportDumpRequestManager();
+		$manager = $this->getRequestInterwikiRequestManager();
 
 		$reflectedClass = new ReflectionClass( $manager );
 		$reflection = $reflectedClass->getProperty( 'ID' );
@@ -67,7 +67,7 @@ class ImportDumpRequestManagerTest extends MediaWikiIntegrationTestCase {
 	 * @covers ::exists
 	 */
 	public function testExists() {
-		$manager = $this->getImportDumpRequestManager();
+		$manager = $this->getRequestInterwikiRequestManager();
 
 		$this->assertTrue( $manager->exists() );
 	}

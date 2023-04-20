@@ -2,7 +2,7 @@
 	"name": "miraheze/import-dump",
 	"type": "mediawiki-extension",
 	"description": "A MediaWiki extension designed to automate user import requests.",
-	"homepage": "https://www.mediawiki.org/wiki/Extension:ImportDump",
+	"homepage": "https://www.mediawiki.org/wiki/Extension:RequestInterwiki",
 	"license": "GPL-3.0-or-later",
 	"authors": [
 		{
@@ -10,8 +10,8 @@
 		}
 	],
 	"support": {
-		"issues": "https://phabricator.miraheze.org/tag/importdump/",
-		"wiki": "https://www.mediawiki.org/wiki/Extension:ImportDump"
+		"issues": "https://phabricator.miraheze.org/tag/requestinterwiki/",
+		"wiki": "https://www.mediawiki.org/wiki/Extension:RequestInterwiki"
 	},
 	"require": {
 		"composer/installers": ">=1.0.1"

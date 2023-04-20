@@ -1,6 +1,6 @@
 <?php
 
-namespace Miraheze\ImportDump;
+namespace Miraheze\RequestInterwiki;
 
 use Config;
 use IContextSource;
@@ -10,7 +10,7 @@ use SpecialPage;
 use TablePager;
 use Wikimedia\Rdbms\ILBFactory;
 
-class ImportDumpRequestQueuePager extends TablePager {
+class RequestInterwikiRequestQueuePager extends TablePager {
 
 	/** @var LinkRenderer */
 	private $linkRenderer;
@@ -49,7 +49,7 @@ class ImportDumpRequestQueuePager extends TablePager {
 	) {
 		parent::__construct( $context, $linkRenderer );
 
-		$centralWiki = $config->get( 'ImportDumpCentralWiki' );
+		$centralWiki = $config->get( 'RequestInterwikiCentralWiki' );
 		if ( $centralWiki ) {
 			$this->mDb = $dbLoadBalancerFactory->getMainLB(
 				$centralWiki
@@ -71,10 +71,10 @@ class ImportDumpRequestQueuePager extends TablePager {
 	 */
 	protected function getFieldNames() {
 		return [
-			'request_timestamp' => $this->msg( 'importdump-table-requested-date' )->text(),
-			'request_actor' => $this->msg( 'importdump-table-requester' )->text(),
-			'request_status' => $this->msg( 'importdump-table-status' )->text(),
-			'request_target' => $this->msg( 'importdump-table-target' )->text(),
+			'request_timestamp' => $this->msg( 'requestinterwiki-table-requested-date' )->text(),
+			'request_actor' => $this->msg( 'requestinterwiki-table-requester' )->text(),
+			'request_status' => $this->msg( 'requestinterwiki-table-status' )->text(),
+			'request_target' => $this->msg( 'requestinterwiki-table-target' )->text(),
 		];
 	}
 
@@ -98,8 +98,8 @@ class ImportDumpRequestQueuePager extends TablePager {
 				break;
 			case 'request_status':
 				$formatted = $this->linkRenderer->makeLink(
-					SpecialPage::getTitleValueFor( 'RequestImportDumpQueue', $row->request_id ),
-					$this->msg( 'importdump-label-' . $row->request_status )->text()
+					SpecialPage::getTitleValueFor( 'RequestInterwikiQueue', $row->request_id ),
+					$this->msg( 'requestinterwiki-label-' . $row->request_status )->text()
 				);
 
 				break;
@@ -121,7 +121,7 @@ class ImportDumpRequestQueuePager extends TablePager {
 	public function getQueryInfo() {
 		$info = [
 			'tables' => [
-				'importdump_requests',
+				'requestinterwiki_requests',
 			],
 			'fields' => [
 				'request_actor',

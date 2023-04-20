@@ -1,15 +1,15 @@
 <?php
 
-namespace Miraheze\ImportDump\Hooks\Handlers;
+namespace Miraheze\RequestInterwiki\Hooks\Handlers;
 
 use Config;
 use ConfigFactory;
 use EchoAttributeManager;
 use MediaWiki\Block\Hook\GetAllBlockActionsHook;
 use MediaWiki\User\Hook\UserGetReservedNamesHook;
-use Miraheze\ImportDump\Notifications\EchoNewRequestPresentationModel;
-use Miraheze\ImportDump\Notifications\EchoRequestCommentPresentationModel;
-use Miraheze\ImportDump\Notifications\EchoRequestStatusUpdatePresentationModel;
+use Miraheze\RequestInterwiki\Notifications\EchoNewRequestPresentationModel;
+use Miraheze\RequestInterwiki\Notifications\EchoRequestCommentPresentationModel;
+use Miraheze\RequestInterwiki\Notifications\EchoRequestStatusUpdatePresentationModel;
 use WikiMap;
 
 class Main implements
@@ -24,15 +24,15 @@ class Main implements
 	 * @param ConfigFactory $configFactory
 	 */
 	public function __construct( ConfigFactory $configFactory ) {
-		$this->config = $configFactory->makeConfig( 'ImportDump' );
+		$this->config = $configFactory->makeConfig( 'RequestInterwiki' );
 	}
 
 	/**
 	 * @param array &$reservedUsernames
 	 */
 	public function onUserGetReservedNames( &$reservedUsernames ) {
-		$reservedUsernames[] = 'ImportDump Extension';
-		$reservedUsernames[] = 'ImportDump Status Update';
+		$reservedUsernames[] = 'RequestInterwiki Extension';
+		$reservedUsernames[] = 'RequestInterwiki Status Update';
 	}
 
 	/**
@@ -40,8 +40,8 @@ class Main implements
 	 */
 	public function onGetAllBlockActions( &$actions ) {
 		if (
-			$this->config->get( 'ImportDumpCentralWiki' ) &&
-			!WikiMap::isCurrentWikiId( $this->config->get( 'ImportDumpCentralWiki' ) )
+			$this->config->get( 'RequestInterwikiCentralWiki' ) &&
+			!WikiMap::isCurrentWikiId( $this->config->get( 'RequestInterwikiCentralWiki' ) )
 		) {
 			return;
 		}
@@ -56,32 +56,32 @@ class Main implements
 	 */
 	public function onBeforeCreateEchoEvent( &$notifications, &$notificationCategories, &$icons ) {
 		if (
-			$this->config->get( 'ImportDumpCentralWiki' ) &&
-			!WikiMap::isCurrentWikiId( $this->config->get( 'ImportDumpCentralWiki' ) )
+			$this->config->get( 'RequestInterwikiCentralWiki' ) &&
+			!WikiMap::isCurrentWikiId( $this->config->get( 'RequestInterwikiCentralWiki' ) )
 		) {
 			return;
 		}
 
-		$notificationCategories['importdump-new-request'] = [
+		$notificationCategories['requestinterwiki-new-request'] = [
 			'priority' => 3,
-			'tooltip' => 'echo-pref-tooltip-importdump-new-request',
+			'tooltip' => 'echo-pref-tooltip-requestinterwiki-new-request',
 		];
 
-		$notificationCategories['importdump-request-comment'] = [
+		$notificationCategories['requestinterwiki-request-comment'] = [
 			'priority' => 3,
-			'tooltip' => 'echo-pref-tooltip-importdump-request-comment',
+			'tooltip' => 'echo-pref-tooltip-requestinterwiki-request-comment',
 		];
 
-		$notificationCategories['importdump-request-status-update'] = [
+		$notificationCategories['requestinterwiki-request-status-update'] = [
 			'priority' => 3,
-			'tooltip' => 'echo-pref-tooltip-importdump-request-status-update',
+			'tooltip' => 'echo-pref-tooltip-requestinterwiki-request-status-update',
 		];
 
-		$notifications['importdump-new-request'] = [
+		$notifications['requestinterwiki-new-request'] = [
 			EchoAttributeManager::ATTR_LOCATORS => [
 				'EchoUserLocator::locateEventAgent'
 			],
-			'category' => 'importdump-new-request',
+			'category' => 'requestinterwiki-new-request',
 			'group' => 'positive',
 			'section' => 'alert',
 			'canNotifyAgent' => true,
@@ -89,11 +89,11 @@ class Main implements
 			'immediate' => true,
 		];
 
-		$notifications['importdump-request-comment'] = [
+		$notifications['requestinterwiki-request-comment'] = [
 			EchoAttributeManager::ATTR_LOCATORS => [
 				'EchoUserLocator::locateEventAgent'
 			],
-			'category' => 'importdump-request-comment',
+			'category' => 'requestinterwiki-request-comment',
 			'group' => 'positive',
 			'section' => 'alert',
 			'canNotifyAgent' => true,
@@ -101,11 +101,11 @@ class Main implements
 			'immediate' => true,
 		];
 
-		$notifications['importdump-request-status-update'] = [
+		$notifications['requestinterwiki-request-status-update'] = [
 			EchoAttributeManager::ATTR_LOCATORS => [
 				'EchoUserLocator::locateEventAgent'
 			],
-			'category' => 'importdump-request-status-update',
+			'category' => 'requestinterwiki-request-status-update',
 			'group' => 'positive',
 			'section' => 'alert',
 			'canNotifyAgent' => true,

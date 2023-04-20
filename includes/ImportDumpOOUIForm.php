@@ -1,6 +1,6 @@
 <?php
 
-namespace Miraheze\ImportDump;
+namespace Miraheze\RequestInterwiki;
 
 use OOUI\FieldsetLayout;
 use OOUI\HtmlSnippet;
@@ -11,7 +11,7 @@ use OOUI\Widget;
 use OOUIHTMLForm;
 use Xml;
 
-class ImportDumpOOUIForm extends OOUIHTMLForm {
+class RequestInterwikiOOUIForm extends OOUIHTMLForm {
 
 	/** @var bool */
 	protected $mSubSectionBeforeFields = false;
@@ -21,7 +21,7 @@ class ImportDumpOOUIForm extends OOUIHTMLForm {
 	 * @return string
 	 */
 	public function wrapForm( $html ) {
-		$html = Xml::tags( 'div', [ 'id' => 'importdump' ], $html );
+		$html = Xml::tags( 'div', [ 'id' => 'requestinterwiki' ], $html );
 
 		return parent::wrapForm( $html );
 	}
@@ -36,7 +36,7 @@ class ImportDumpOOUIForm extends OOUIHTMLForm {
 	protected function wrapFieldSetSection( $legend, $section, $attributes, $isRoot ) {
 		$layout = parent::wrapFieldSetSection( $legend, $section, $attributes, $isRoot );
 
-		$layout->addClasses( [ 'importdump-fieldset-wrapper' ] );
+		$layout->addClasses( [ 'requestinterwiki-fieldset-wrapper' ] );
 		$layout->removeClasses( [ 'oo-ui-panelLayout-framed' ] );
 
 		return $layout;
@@ -69,7 +69,7 @@ class ImportDumpOOUIForm extends OOUIHTMLForm {
 				'classes' => [ 'mw-htmlform-autoinfuse-lazy' ],
 				'label' => $label,
 				'content' => new FieldsetLayout( [
-					'classes' => [ 'importdump-section-fieldset' ],
+					'classes' => [ 'requestinterwiki-section-fieldset' ],
 					'id' => "mw-section-{$key}",
 					'label' => $label,
 					'items' => [
@@ -87,7 +87,7 @@ class ImportDumpOOUIForm extends OOUIHTMLForm {
 			'infusable' => true,
 			'expanded' => false,
 			'autoFocus' => false,
-			'classes' => [ 'importdump-tabs' ],
+			'classes' => [ 'requestinterwiki-tabs' ],
 		] );
 
 		$indexLayout->addTabPanels( $tabPanels );
@@ -97,7 +97,7 @@ class ImportDumpOOUIForm extends OOUIHTMLForm {
 		$form = new PanelLayout( [
 			'framed' => true,
 			'expanded' => false,
-			'classes' => [ 'importdump-tabs-wrapper' ],
+			'classes' => [ 'requestinterwiki-tabs-wrapper' ],
 			'content' => $indexLayout
 		] );
 
